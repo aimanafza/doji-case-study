@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doji — Product Case Study by Aiman Afzal Arain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1712;
+    --paper: #f5f0e4;
+    --cream: #ede6d3;
+    --warm: #e4dcc8;
+    --muted: #8a8070;
+    --accent: #c17f3a;
+    --accent-light: #e8c99a;
+    --deep: #2e2416;
+    --line: rgba(26,23,18,0.1);
+    --line-strong: rgba(26,23,18,0.18);
+    --chart-1: #c17f3a;
+    --chart-2: #2e2416;
+    --chart-3: #8a8070;
+    --chart-4: #e8c99a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .progress-bar {
+    position: fixed; top: 0; left: 0; z-index: 200;
+    height: 2px; background: var(--accent);
+    width: 0%; transition: width 0.08s linear;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(245,240,228,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-left { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .nav-left a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-left a:hover { color: var(--ink); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.12em; color: var(--ink); }
+  .nav-right { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cover-bg-fig {
+    position: absolute; right: -40px; top: 80px;
+    opacity: 0.04; pointer-events: none;
+  }
+
+  .cover-tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+
+  .tag {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 5px 12px; border: 1px solid;
+  }
+  .tag-accent { color: var(--accent); border-color: rgba(193,127,58,0.4); }
+  .tag-muted { color: var(--muted); border-color: rgba(138,128,112,0.3); }
+
+  h1.cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 92px);
+    font-weight: 300; line-height: 0.92;
+    color: var(--ink); margin-bottom: 28px;
+  }
+  h1.cover-title em { font-style: italic; color: var(--accent); }
+
+  .cover-sub { font-size: 15px; color: var(--muted); max-width: 540px; line-height: 1.8; margin-bottom: 48px; }
+
+  .cover-byline {
+    display: flex; align-items: center; gap: 16px;
+    padding-top: 28px; border-top: 1px solid var(--line);
+  }
+
+  .byline-av {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; color: white;
+  }
+  .byline-name { font-size: 13px; color: var(--ink); }
+  .byline-role { font-size: 11px; color: var(--muted); }
+
+  /* LAYOUT */
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px; }
+
+  section { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 300; line-height: 1.05; color: var(--ink); margin-bottom: 28px;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 400; color: var(--ink);
+    margin-bottom: 12px; margin-top: 48px;
+  }
+
+  p { font-size: 15px; color: #3d3828; line-height: 1.9; margin-bottom: 18px; max-width: 660px; }
+
+  .pull-quote {
+    margin: 56px 0; padding: 28px 36px;
+    border-left: 3px solid var(--accent);
+    background: rgba(193,127,58,0.04);
+  }
+  .pull-quote q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 2.8vw, 30px);
+    font-weight: 300; font-style: italic;
+    line-height: 1.45; color: var(--ink); display: block; margin-bottom: 10px;
+  }
+  .pull-quote q::before, .pull-quote q::after { content: ''; }
+  .pull-quote-attr { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+
+  /* ── CHART FRAMEWORK ── */
+  .chart-wrap { margin: 48px 0; }
+  .chart-title {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .chart-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; color: var(--ink); margin-bottom: 28px; font-weight: 400;
+  }
+  .chart-source { font-size: 10px; color: var(--muted); margin-top: 10px; font-style: italic; }
+
+  /* BAR CHART */
+  .bar-chart { display: flex; gap: 20px; align-items: flex-end; height: 240px; padding-bottom: 32px; position: relative; }
+  .bar-chart::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 32px;
+    height: 1px; background: var(--line-strong);
+  }
+  .bar-group { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+  .bar-col { width: 100%; border-radius: 2px 2px 0 0; position: relative; transition: opacity 0.2s; }
+  .bar-col:hover { opacity: 0.85; }
+  .bar-val {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; font-weight: 500; color: var(--ink); white-space: nowrap;
+  }
+  .bar-label { font-size: 10px; color: var(--muted); text-align: center; letter-spacing: 0.04em; }
+
+  /* LINE CHART */
+  .line-chart-wrap { position: relative; height: 220px; margin: 32px 0 48px; }
+
+  /* STAT GRID */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); margin: 40px 0; }
+  .stat-cell { background: var(--paper); padding: 28px 20px; }
+  .stat-num-lg {
+    font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300;
+    color: var(--accent); line-height: 1; display: block; margin-bottom: 6px;
+  }
+  .stat-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── WIREFRAMES ── */
+  .wireframe-section { margin: 56px 0; }
+  .wf-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .wf-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; color: var(--ink); margin-bottom: 20px; font-weight: 400;
+  }
+  .wf-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; max-width: 600px; }
+  .wf-container {
+    background: var(--cream); border: 1px solid var(--line-strong);
+    padding: 24px; display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .wf-note {
+    margin-top: 12px; font-size: 12px; color: var(--muted);
+    font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  }
+
+  /* ── COMPETITOR ── */
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line); margin: 48px 0; }
+  .comp-card { background: var(--paper); padding: 28px; }
+  .comp-card.hl { background: var(--deep); }
+  .comp-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .comp-card.hl .comp-head { border-bottom-color: rgba(245,240,228,0.1); }
+  .comp-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--ink); }
+  .comp-card.hl .comp-name { color: var(--paper); }
+  .comp-badge { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 8px; border: 1px solid rgba(193,127,58,0.4); color: var(--accent); }
+  .comp-card.hl .comp-badge { border-color: rgba(245,240,228,0.2); color: var(--accent-light); }
+  .comp-row { margin-bottom: 12px; }
+  .comp-l { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .comp-card.hl .comp-l { color: rgba(245,240,228,0.45); }
+  .comp-v { font-size: 13px; color: var(--ink); line-height: 1.5; }
+  .comp-card.hl .comp-v { color: rgba(245,240,228,0.82); }
+  .comp-insight { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--muted); line-height: 1.6; }
+  .comp-card.hl .comp-insight { border-top-color: rgba(245,240,228,0.1); color: var(--accent-light); }
+
+  /* RADAR */
+  .radar-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; align-items: center; }
+  .radar-legend { display: flex; flex-direction: column; gap: 14px; }
+  .legend-row { display: flex; align-items: center; gap: 10px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-text { font-size: 13px; color: var(--ink); }
+  .legend-sub { font-size: 11px; color: var(--muted); }
+
+  /* CONCEPT CARDS */
+  .concept-stack { display: flex; flex-direction: column; gap: 1px; margin: 48px 0; }
+  .concept-card { display: grid; grid-template-columns: 80px 1fr; background: var(--cream); overflow: hidden; }
+  .concept-num-col { background: var(--ink); display: flex; align-items: center; justify-content: center; padding: 40px 0; }
+  .concept-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--accent-light); writing-mode: vertical-rl; letter-spacing: 0.08em; }
+  .concept-body { padding: 32px 36px; }
+  .concept-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .concept-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .concept-desc { font-size: 14px; color: #5a5240; line-height: 1.8; margin-bottom: 0; max-width: 540px; }
+  .concept-insight {
+    margin-top: 14px; padding: 10px 14px;
+    background: rgba(193,127,58,0.06); border-left: 2px solid var(--accent);
+    font-size: 13px; color: var(--muted); line-height: 1.7; font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* REVENUE MODEL */
+  .rev-model { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); margin: 40px 0; }
+  .rev-cell { background: var(--paper); padding: 28px 24px; }
+  .rev-cell-accent { background: rgba(193,127,58,0.05); }
+  .rev-icon { font-size: 20px; margin-bottom: 10px; display: block; }
+  .rev-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--ink); margin-bottom: 6px; }
+  .rev-val { font-size: 22px; font-family: 'Cormorant Garamond', serif; color: var(--accent); font-weight: 500; margin-bottom: 6px; display: block; }
+  .rev-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* APPROACH TIMELINE */
+  .timeline { display: flex; flex-direction: column; margin: 40px 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 22px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+  .tl-step { display: grid; grid-template-columns: 44px 1fr; gap: 28px; padding-bottom: 44px; }
+  .tl-dot { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--paper); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--accent); flex-shrink: 0; position: relative; z-index: 1; }
+  .tl-body { padding-top: 10px; }
+  .tl-week { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .tl-title { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: var(--ink); margin-bottom: 8px; }
+  .tl-desc { font-size: 13px; color: #5a5240; line-height: 1.8; max-width: 520px; margin-bottom: 0; }
+
+  /* CLOSING */
+  .closing { padding: 112px 0; text-align: center; }
+  .closing-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5vw, 58px); font-weight: 300; font-style: italic; color: var(--ink); margin-bottom: 18px; line-height: 1.1; }
+  .closing-sub { font-size: 14px; color: var(--muted); max-width: 400px; margin: 0 auto 36px; line-height: 1.8; }
+  .closing-link { display: inline-block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(193,127,58,0.4); padding-bottom: 3px; }
+
+  footer { padding: 28px 48px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .footer-credit { font-size: 11px; color: var(--muted); }
+
+  /* PIE/DONUT helper */
+  .donut-row { display: flex; gap: 32px; align-items: center; margin: 32px 0; flex-wrap: wrap; }
+
+  /* 2×2 MATRIX */
+  .matrix-wrap { position: relative; margin: 40px 0; }
+  .matrix-grid {
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 1px; background: var(--line); border: 1px solid var(--line-strong);
+    min-height: 300px;
+  }
+  .matrix-cell { background: var(--cream); padding: 24px; position: relative; display: flex; flex-direction: column; justify-content: flex-start; }
+  .matrix-cell-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .matrix-cell-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--ink); margin-bottom: 16px; }
+  .matrix-dot { position: absolute; border-radius: 50%; }
+  .matrix-x-label { text-align: center; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+  .matrix-y-label {
+    position: absolute; left: -48px; top: 50%; transform: translateY(-50%) rotate(-90deg);
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--warm); }
+
+  /* ── TLDR STRIP ── */
+  .tldr-strip {
+    background: var(--deep);
+    padding: 56px 48px;
+    border-bottom: 1px solid rgba(245,240,228,0.08);
+  }
+  .tldr-header {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 32px;
+  }
+  .tldr-eyebrow {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); flex-shrink: 0;
+  }
+  .tldr-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; font-style: italic;
+    color: rgba(245,240,228,0.9); line-height: 1.2;
+  }
+  .tldr-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(245,240,228,0.08);
+  }
+  .tldr-card {
+    background: rgba(245,240,228,0.03);
+    padding: 24px 22px;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: block;
+    border-bottom: 2px solid transparent;
+  }
+  .tldr-card:hover {
+    background: rgba(245,240,228,0.07);
+    border-bottom-color: var(--accent);
+  }
+  .tldr-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; color: var(--accent);
+    letter-spacing: 0.1em; margin-bottom: 8px; display: block;
+  }
+  .tldr-card-title {
+    font-size: 13px; color: rgba(245,240,228,0.85);
+    line-height: 1.5; margin-bottom: 8px; font-weight: 400;
+  }
+  .tldr-card-desc {
+    font-size: 11px; color: rgba(245,240,228,0.4);
+    line-height: 1.6;
+  }
+  .tldr-arrow {
+    font-size: 10px; color: var(--accent);
+    margin-top: 12px; display: block;
+    letter-spacing: 0.08em;
+  }
+  .tldr-proto-card {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(245,240,228,0.9);
+  border: 1px solid rgba(245,240,228,0.3);
+  padding: 20px 24px;
+  margin-top: 1px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.tldr-proto-card:hover {
+  background: rgba(245,240,228,1);
+}
+.tldr-proto-title {
+  font-size: 13px; font-weight: 400;
+  color: var(--deep); letter-spacing: 0.04em;
+}
+.tldr-proto-desc {
+  font-size: 11px; color: rgba(15,12,6,0.5); line-height: 1.6;
+}
+.tldr-proto-cta {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--deep); white-space: nowrap; padding-left: 40px; flex-shrink: 0;
+}
+
+  /* ── REVIEW SCREENSHOT PLACEHOLDERS ── */
+  .review-screenshots {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px; margin: 28px 0;
+  }
+  .screenshot-slot {
+  background: var(--deep);
+  border: 1px solid rgba(193,127,58,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.screenshot-slot img {
+  width: 100%;
+  height: auto;        /* ← lets image show at full natural height */
+  display: block;
+  border-radius: 6px;
+}
+  .screenshot-slot-label {
+    font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    opacity: 0.7; position: relative; z-index: 1;
+  }
+  .screenshot-slot-hint {
+    font-size: 11px; color: rgba(245,240,228,0.3);
+    text-align: center; position: relative; z-index: 1;
+  }
+  .screenshot-caption {
+    font-size: 11px; color: var(--muted);
+    font-style: italic; font-family: 'Cormorant Garamond', serif;
+    text-align: center; margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <div class="nav-left"><a href="https://aimanafzalarain.vercel.app/">← Aiman Afzal Arain</a></div>
+  <div class="nav-logo">Case Study — Doji</div>
+  <div class="nav-right">Feb 2026</div>
+</nav>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <svg class="cover-bg-fig" width="500" height="700" viewBox="0 0 500 700">
+    <ellipse cx="250" cy="60" rx="55" ry="58" fill="var(--ink)"/>
+    <rect x="140" y="120" width="220" height="320" rx="8" fill="var(--ink)"/>
+    <rect x="150" y="445" width="80" height="220" rx="6" fill="var(--ink)"/>
+    <rect x="270" y="445" width="80" height="220" rx="6" fill="var(--ink)"/>
+  </svg>
+
+  <div class="cover-tag-row">
+    <span class="tag tag-accent">Product Thinking</span>
+    <span class="tag tag-accent">Revenue Strategy</span>
+    <span class="tag tag-muted">Internship Application · 2026</span>
+  </div>
+  <h1 class="cover-title">Doji —<br>the <em>social</em><br>layer missing<br>from fashion tech</h1>
+  <p class="cover-sub">A full product case study: competitive analysis, market data, revenue modelling, four mid-fidelity wireframes, real App Store user research, and a 90-day execution plan.</p>
+  <div class="cover-byline">
+    <div class="byline-av">A</div>
+    <div>
+      <div class="byline-name">Aiman Afzal Arain</div>
+      <div class="byline-role">Product Designer · Minerva University '27 · aimanafzalarain.vercel.app</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TLDR STRIP ══ -->
+<div class="tldr-strip">
+  <div class="tldr-header">
+    <span class="tldr-eyebrow">TL;DR — 4 Ideas</span>
+    <div class="tldr-heading">What I'd build at Doji, and why it matters</div>
+  </div>
+  <div class="tldr-grid">
+    <a class="tldr-card" href="#concept-safety">
+      <span class="tldr-num">01 ·</span>
+      <div class="tldr-card-title">Biometric Avatar Lock</div>
+      <div class="tldr-card-desc">Your body, only yours. Liveness detection so no one can use your image without your consent.</div>
+      <span class="tldr-arrow">↓ Trust & Safety</span>
+    </a>
+    <a class="tldr-card" href="#concept-southasia">
+      <span class="tldr-num">02 ·</span>
+      <div class="tldr-card-title">South Asian Fashion Universe</div>
+      <div class="tldr-card-desc">A $65B market, zero competitors. Saree draping, lehenga volume, dupatta physics — none of it exists yet.</div>
+      <span class="tldr-arrow">↓ Market Expansion</span>
+    </a>
+    <a class="tldr-card" href="#concept-accessories">
+      <span class="tldr-num">03 ·</span>
+      <div class="tldr-card-title">Look Studio — Make It Work For Everyone</div>
+      <div class="tldr-card-desc">Doji launched Look Studio with 1M+ products. The right call. Now the work is making it actually trustworthy — for every body.</div>
+      <span class="tldr-arrow">↓ Depth over breadth</span>
+    </a>
+    <a class="tldr-card" href="#concept-avatar">
+      <span class="tldr-num">04 ·</span>
+      <div class="tldr-card-title">Avatar Body Fidelity</div>
+      <div class="tldr-card-desc">The foundation that makes Look Studio worth trusting. Fix the avatar — real body sculpting, garment physics, actual proportions.</div>
+      <span class="tldr-arrow">↓ Core Product Quality</span>
+    </a>
+  </div>
+  <a class="tldr-proto-card" href="doji-prototype-v2.html" target="_blank">
+    <div>
+      <div class="tldr-proto-title">↗ Interactive Prototype</div>
+      <div class="tldr-proto-desc">Social feed, brand universes, style chapter, and a reimagined onboarding flow — built to show, not just tell.</div>
+    </div>
+    <span class="tldr-proto-cta">Open prototype →</span>
+  </a>
+
+</div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 00: MARKET ══ -->
+<section>
+  <div class="section-label">00 — Why now</div>
+  <h2>A $48B market at a<br><em>critical inflection point</em></h2>
+  <p>Virtual try-on is no longer a novelty — it is a category. The global market is valued at $15.18B in 2025 and tracking toward $48.1B by 2030 at a 26% CAGR. That's one of the fastest-growing curves in consumer technology. But market size alone isn't the opportunity. The opportunity is <strong>who owns the relationship.</strong></p>
+
+  <!-- MARKET GROWTH BAR CHART -->
+  <div class="chart-wrap">
+    <div class="chart-title">Global Virtual Try-On Market</div>
+    <div class="chart-subtitle">Revenue ($B) · 2022–2030 Projected</div>
+    <div class="bar-chart" id="marketChart">
+      <div class="bar-group">
+        <div class="bar-col" style="height:28px; background:var(--chart-3);">
+          <span class="bar-val">$5.2B</span>
+        </div>
+        <div class="bar-label">2022</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:44px; background:var(--chart-3);">
+          <span class="bar-val">$9.2B</span>
+        </div>
+        <div class="bar-label">2023</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:60px; background:var(--chart-3);">
+          <span class="bar-val">$12.1B</span>
+        </div>
+        <div class="bar-label">2024</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:80px; background:var(--chart-1);">
+          <span class="bar-val" style="color:var(--accent); font-weight:600;">$15.2B</span>
+        </div>
+        <div class="bar-label" style="color:var(--accent); font-weight:500;">2025 ←</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:100px; background:var(--chart-4); opacity:0.7;">
+          <span class="bar-val">$19.1B</span>
+        </div>
+        <div class="bar-label" style="color:var(--muted);">2026 est.</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:124px; background:var(--chart-4); opacity:0.6;">
+          <span class="bar-val">$24.1B</span>
+        </div>
+        <div class="bar-label" style="color:var(--muted);">2027 est.</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:152px; background:var(--chart-4); opacity:0.5;">
+          <span class="bar-val">$30.4B</span>
+        </div>
+        <div class="bar-label" style="color:var(--muted);">2028 est.</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:180px; background:var(--chart-4); opacity:0.4;">
+          <span class="bar-val">$38.3B</span>
+        </div>
+        <div class="bar-label" style="color:var(--muted);">2029 est.</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="height:200px; background: linear-gradient(180deg, var(--chart-2) 0%, #4a3828 100%);">
+          <span class="bar-val" style="color:var(--deep); font-weight:600;">$48.1B</span>
+        </div>
+        <div class="bar-label" style="color:var(--deep); font-weight:500;">2030 est.</div>
+      </div>
+    </div>
+    <div class="chart-source">Sources: Mordor Intelligence (2025), Grand View Research (2025). 26% CAGR 2025–2030.</div>
+  </div>
+
+  <!-- KEY STATS -->
+  <div class="stat-grid">
+    <div class="stat-cell">
+      <span class="stat-num-lg">94%</span>
+      <div class="stat-desc">higher conversion rate when shoppers use AR/3D try-on (Shopify, Snap Inc. 2025)</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">44%</span>
+      <div class="stat-desc">higher add-to-cart rate after 3D interaction vs. static product imagery</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">$890B</span>
+      <div class="stat-desc">projected total retail returns in 2024 — the core problem VTO solves (NRF)</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">26%</span>
+      <div class="stat-desc">fastest-growing geography is Asia-Pacific — a market Doji has not entered</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <q>Avatar-based digital twin platforms are set to overtake kiosk-centric models, enabling persistent, shareable representations across channels.</q>
+    <div class="pull-quote-attr">Mordor Intelligence Market Report, 2025 — this is exactly what Doji is building</div>
+  </div>
+</section>
+
+<!-- ══ 01: COMPETITIVE ══ -->
+<section>
+  <div class="section-label">01 — Competitive landscape</div>
+  <h2>Three different answers<br>to the same <em>question</em></h2>
+  <p>The question everyone in this space is answering: who owns your body online? Each player has a different strategy — and Doji's advantage is less about technology and more about <em>what it's for.</em></p>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-head">
+        <div class="comp-name">Zara</div>
+        <div class="comp-badge">Mass Market</div>
+      </div>
+      <div class="comp-row"><div class="comp-l">Technology</div><div class="comp-v">2-photo avatar, 360° video, 3D garment sim, ~2 min generation</div></div>
+      <div class="comp-row"><div class="comp-l">Rollout</div><div class="comp-v">Spain, UK, Germany, Mexico, Italy — Dec 2025</div></div>
+      <div class="comp-row"><div class="comp-l">Result</div><div class="comp-v">+18% CTR, −35% shoot production costs, double-digit return reduction</div></div>
+      <div class="comp-row"><div class="comp-l">Weakness</div><div class="comp-v">Pure utility play. No social. No memory. Privacy controversy on launch.</div></div>
+      <div class="comp-insight">"We use artificial intelligence only to complement our existing processes." — Zara, Dec 2025. They're optimizing operations, not reimagining identity.</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-head">
+        <div class="comp-name">Alta</div>
+        <div class="comp-badge">Startup</div>
+      </div>
+      <div class="comp-row"><div class="comp-l">Funding</div><div class="comp-v">$11M seed — Menlo Ventures (Uber/Poshmark), Aglae (LVMH family)</div></div>
+      <div class="comp-row"><div class="comp-l">Strategy</div><div class="comp-v">Multi-brand, learns preferences over time. Personalization-first.</div></div>
+      <div class="comp-row"><div class="comp-l">Launched</div><div class="comp-v">Public beta May 2025</div></div>
+      <div class="comp-row"><div class="comp-l">Weakness</div><div class="comp-v">Lower image quality than Doji. No exclusive brand partnerships. No social layer.</div></div>
+      <div class="comp-insight">Alta is building a taste layer across all fashion. Useful but anonymous — there's no community, no self-expression, no world-building.</div>
+    </div>
+    <div class="comp-card hl">
+      <div class="comp-head">
+        <div class="comp-name" style="color:var(--paper);">Doji</div>
+        <div class="comp-badge">Doji</div>
+      </div>
+      <div class="comp-row"><div class="comp-l">Funding</div><div class="comp-v">$14M seed — Thrive Capital (OpenAI, SKIMS), Seven Seven Six</div></div>
+      <div class="comp-row"><div class="comp-l">Edge</div><div class="comp-v">Most photorealistic avatars. Luxury brand strategy. Identity-first vision.</div></div>
+      <div class="comp-row"><div class="comp-l">Partnership</div><div class="comp-v">Exclusive Peter Do PD-168 universe — the template for brand world-building</div></div>
+      <div class="comp-row"><div class="comp-l">Opportunity</div><div class="comp-v">Social layer. Safety infrastructure. South Asian + global expansion. Accessories.</div></div>
+      <div class="comp-insight">The only player with a manifesto: "Try seeing fashion not as the final image, but the process of becoming." That's a product philosophy, not a feature list.</div>
+    </div>
+  </div>
+
+  <!-- CAPABILITY RADAR (SVG) -->
+  <div class="radar-wrap">
+    <div>
+      <div class="chart-title">Capability Comparison</div>
+      <div class="chart-subtitle">Across 5 dimensions</div>
+      <svg width="280" height="280" viewBox="0 0 280 280">
+        <!-- Grid circles -->
+        <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(26,23,18,0.08)" stroke-width="1"/>
+        <circle cx="140" cy="140" r="70" fill="none" stroke="rgba(26,23,18,0.08)" stroke-width="1"/>
+        <circle cx="140" cy="140" r="40" fill="none" stroke="rgba(26,23,18,0.08)" stroke-width="1"/>
+        <!-- Axes (5 dimensions) -->
+        <!-- Image Quality (top) -->
+        <line x1="140" y1="40" x2="140" y2="140" stroke="rgba(26,23,18,0.12)" stroke-width="1"/>
+        <!-- Social Layer (top-right) -->
+        <line x1="140" y1="140" x2="235" y2="79" stroke="rgba(26,23,18,0.12)" stroke-width="1"/>
+        <!-- Brand Partnerships (bottom-right) -->
+        <line x1="140" y1="140" x2="198" y2="202" stroke="rgba(26,23,18,0.12)" stroke-width="1"/>
+        <!-- Safety/Trust (bottom-left) -->
+        <line x1="140" y1="140" x2="82" y2="202" stroke="rgba(26,23,18,0.12)" stroke-width="1"/>
+        <!-- Market Reach (top-left) -->
+        <line x1="140" y1="140" x2="45" y2="79" stroke="rgba(26,23,18,0.12)" stroke-width="1"/>
+
+        <!-- Axis labels -->
+        <text x="140" y="30" text-anchor="middle" font-size="9" fill="var(--muted)" letter-spacing="0.08em">IMAGE QUALITY</text>
+        <text x="248" y="75" text-anchor="middle" font-size="9" fill="var(--muted)" letter-spacing="0.08em">SOCIAL</text>
+        <text x="215" y="214" text-anchor="middle" font-size="9" fill="var(--muted)" letter-spacing="0.08em">BRAND DEALS</text>
+        <text x="65" y="214" text-anchor="middle" font-size="9" fill="var(--muted)" letter-spacing="0.08em">SAFETY</text>
+        <text x="32" y="75" text-anchor="middle" font-size="9" fill="var(--muted)" letter-spacing="0.08em">REACH</text>
+
+        <!-- ZARA polygon (high reach, medium quality, low social, medium safety, low brand) -->
+        <!-- Reach=90, Quality=72, Social=10, Brand=25, Safety=60 -->
+        <polygon points="140,50 220,84 148,186 111,186 65,111" 
+          fill="rgba(138,128,112,0.12)" stroke="var(--chart-3)" stroke-width="1.5" opacity="0.7"/>
+
+        <!-- ALTA polygon (medium reach, medium quality, low social, low brand, medium safety) -->
+        <polygon points="140,76 192,106 148,170 117,170 90,106" 
+          fill="rgba(138,128,112,0.08)" stroke="rgba(138,128,112,0.5)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+
+        <!-- DOJI polygon (high quality, medium social, high brand, low safety currently, low reach) -->
+        <!-- Quality=95, Social=45, Brand=90, Safety=35, Reach=30 -->
+        <polygon points="140,44 201,92 185,192 107,193 102,96" 
+          fill="rgba(193,127,58,0.15)" stroke="var(--accent)" stroke-width="2"/>
+
+        <!-- Center dot -->
+        <circle cx="140" cy="140" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <div class="radar-legend">
+      <div class="legend-row">
+        <div class="legend-dot" style="background:var(--accent);"></div>
+        <div><div class="legend-text">Doji</div><div class="legend-sub">Strong quality + brand deals. Safety gap is real.</div></div>
+      </div>
+      <div class="legend-row">
+        <div class="legend-dot" style="background:var(--chart-3);"></div>
+        <div><div class="legend-text">Zara</div><div class="legend-sub">Massive reach. Utility-only. No relationship layer.</div></div>
+      </div>
+      <div class="legend-row">
+        <div class="legend-dot" style="background: rgba(138,128,112,0.5); border: 1px dashed var(--muted);"></div>
+        <div><div class="legend-text">Alta</div><div class="legend-sub">Middle of the pack. No clear differentiator.</div></div>
+      </div>
+      <div style="margin-top: 20px; padding: 14px; background: rgba(193,127,58,0.05); border-left: 2px solid var(--accent);">
+        <div style="font-size:11px; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px;">Key Gap</div>
+        <div style="font-size:13px; color:var(--muted); font-style:italic; font-family:'Cormorant Garamond',serif; line-height:1.6;">Doji's safety dimension is currently its weakest point — and the most urgent to fix before scaling social features.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02: THREE CONCEPTS + WIREFRAMES ══ -->
+<section>
+  <div class="section-label">02 — The three opportunities</div>
+  <h2>What I'd build, and<br><em>exactly</em> how</h2>
+  <p>Each concept below is paired with a mid-fidelity wireframe sketch showing the proposed UI, and an intern-level execution note explaining how I'd actually approach it in the first 90 days.</p>
+
+  <div class="concept-stack">
+
+    <!-- CONCEPT 1: SAFETY -->
+    <div class="concept-card" id="concept-safety">
+      <div class="concept-num-col"><div class="concept-num">01</div></div>
+      <div class="concept-body">
+        <div class="concept-tag">Trust & Safety — Critical Priority</div>
+        <div class="concept-title">Biometric avatar lock: your body, only yours</div>
+        <p class="concept-desc">The most pressing unresolved risk in the entire VTO category. Zara's December 2025 rollout immediately triggered privacy controversy — users worried about non-consensual image use. For Doji, this is existential: a social app where people share avatar looks is only safe if those avatars cannot be created using someone else's image.</p>
+        <p class="concept-desc">The fix: liveness detection during avatar creation. A brief "blink once, turn slightly left" prompt that verifies the selfie is live and belongs to the person consenting. This already exists in banking and identity verification contexts — it's not new technology, it's a new application of existing tech in fashion.</p>
+        <div class="concept-insight">As intern: Run a qualitative research study specifically with women users asking about their comfort level sharing avatars publicly. Bring findings to the team as a safety brief before any social sharing feature ships. The feature doesn't need to be built to make the case for building it.</div>
+      </div>
+    </div>
+
+    <!-- WIREFRAME 1 -->
+    <div style="margin: 0 0 4px; padding: 24px 36px; background: var(--cream); border-left: 3px solid var(--accent);">
+      <div class="wf-label">Mid-Fidelity Wireframe · Concept 01</div>
+      <div class="wf-title">Avatar Creation Flow — Biometric Verification Step</div>
+      <div class="wf-desc">A new step inserted between "take your selfie" and "generate avatar" — live face verification that is invisible when done right, critical when absent.</div>
+      <div class="wf-container" style="background: #e8e2d2; justify-content: center;">
+        <!-- Phone mockup showing avatar creation flow -->
+        <svg width="680" height="360" viewBox="0 0 680 360" style="max-width:100%;">
+          <!-- STEP 1: Upload selfie -->
+          <rect x="10" y="10" width="190" height="340" rx="16" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <rect x="20" y="32" width="170" height="8" rx="4" fill="#1a1712" opacity="0.1"/>
+          <rect x="20" y="48" width="100" height="6" rx="3" fill="#1a1712" opacity="0.06"/>
+          <!-- camera viewfinder -->
+          <rect x="30" y="70" width="150" height="160" rx="8" fill="#2e2416" opacity="0.06"/>
+          <rect x="65" y="90" width="80" height="80" rx="40" fill="#2e2416" opacity="0.08"/>
+          <!-- face oval guide -->
+          <ellipse cx="140" cy="140" rx="42" ry="52" fill="none" stroke="#c17f3a" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="140" y="176" text-anchor="middle" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif">Center your face</text>
+          <!-- photo btn -->
+          <circle cx="95" cy="262" r="22" fill="#1a1712" opacity="0.06"/>
+          <circle cx="95" cy="262" r="16" fill="#1a1712" opacity="0.08"/>
+          <circle cx="95" cy="262" r="8" fill="#1a1712" opacity="0.2"/>
+          <!-- label -->
+          <rect x="30" y="295" width="90" height="7" rx="3" fill="#1a1712" opacity="0.1"/>
+          <rect x="30" y="308" width="60" height="5" rx="2.5" fill="#1a1712" opacity="0.06"/>
+          <text x="105" y="344" text-anchor="middle" font-size="8" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">STEP 1 OF 3</text>
+          <!-- Step label box -->
+          <rect x="10" y="10" width="50" height="16" rx="3" fill="#c17f3a" opacity="0.15"/>
+          <text x="35" y="22" text-anchor="middle" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">TAKE SELFIE</text>
+
+          <!-- Arrow -->
+          <line x1="210" y1="180" x2="230" y2="180" stroke="#8a8070" stroke-width="1"/>
+          <polygon points="230,175 240,180 230,185" fill="#8a8070"/>
+
+          <!-- STEP 2: LIVENESS CHECK (highlighted) -->
+          <rect x="245" y="10" width="190" height="340" rx="16" fill="white" stroke="#c17f3a" stroke-width="2"/>
+          <!-- highlighted border glow effect -->
+          <rect x="245" y="10" width="190" height="340" rx="16" fill="rgba(193,127,58,0.03)"/>
+          <!-- Header -->
+          <rect x="255" y="32" width="170" height="8" rx="4" fill="#1a1712" opacity="0.1"/>
+          <!-- Liveness UI -->
+          <rect x="265" y="58" width="150" height="18" rx="3" fill="#c17f3a" opacity="0.12"/>
+          <text x="340" y="71" text-anchor="middle" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">LIVE VERIFICATION</text>
+          <!-- Face circle -->
+          <ellipse cx="340" cy="160" rx="55" ry="65" fill="none" stroke="#c17f3a" stroke-width="2"/>
+          <!-- Animated dots (liveness) -->
+          <circle cx="300" cy="130" r="4" fill="#c17f3a" opacity="0.8"/>
+          <circle cx="340" cy="120" r="4" fill="#c17f3a" opacity="0.5"/>
+          <circle cx="380" cy="130" r="4" fill="#c17f3a" opacity="0.3"/>
+          <!-- Check marks: blink, turn -->
+          <rect x="265" y="240" width="165" height="30" rx="6" fill="rgba(193,127,58,0.08)" stroke="rgba(193,127,58,0.3)" stroke-width="1"/>
+          <text x="305" y="258" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">✓  Blink detected</text>
+          <rect x="265" y="276" width="165" height="30" rx="6" fill="rgba(193,127,58,0.04)" stroke="rgba(26,23,18,0.1)" stroke-width="1"/>
+          <text x="305" y="294" font-size="8.5" fill="#8a8070" font-family="'DM Sans', sans-serif">◯  Slight head turn...</text>
+          <text x="340" y="344" text-anchor="middle" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">STEP 2 OF 3  ← NEW</text>
+          <!-- NEW badge -->
+          <rect x="388" y="10" width="36" height="16" rx="3" fill="#c17f3a"/>
+          <text x="406" y="22" text-anchor="middle" font-size="7.5" fill="white" font-family="'DM Sans', sans-serif" font-weight="500" letter-spacing="0.04em">NEW</text>
+
+          <!-- Arrow -->
+          <line x1="445" y1="180" x2="465" y2="180" stroke="#8a8070" stroke-width="1"/>
+          <polygon points="465,175 475,180 465,185" fill="#8a8070"/>
+
+          <!-- STEP 3: Avatar generated -->
+          <rect x="480" y="10" width="190" height="340" rx="16" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <rect x="490" y="32" width="170" height="8" rx="4" fill="#1a1712" opacity="0.1"/>
+          <!-- Avatar result -->
+          <rect x="500" y="55" width="150" height="200" rx="6" fill="#2e2416" opacity="0.06"/>
+          <!-- Figure -->
+          <ellipse cx="575" cy="88" rx="18" ry="19" fill="#2e2416" opacity="0.15"/>
+          <rect x="553" y="108" width="44" height="80" rx="5" fill="#2e2416" opacity="0.12"/>
+          <rect x="555" y="190" width="18" height="60" rx="3" fill="#2e2416" opacity="0.1"/>
+          <rect x="577" y="190" width="18" height="60" rx="3" fill="#2e2416" opacity="0.1"/>
+          <!-- Verified badge -->
+          <rect x="510" y="62" width="70" height="16" rx="3" fill="rgba(193,127,58,0.15)"/>
+          <text x="544" y="74" text-anchor="middle" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">✓ VERIFIED</text>
+          <!-- CTA btn -->
+          <rect x="500" y="268" width="150" height="32" rx="4" fill="#1a1712"/>
+          <text x="575" y="288" text-anchor="middle" font-size="9" fill="white" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">TRY ON LOOKS</text>
+          <text x="575" y="344" text-anchor="middle" font-size="8" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">STEP 3 OF 3</text>
+        </svg>
+      </div>
+      <div class="wf-note">The liveness check adds ~15 seconds to onboarding. User research will tell us if that's acceptable friction — my hypothesis is yes, especially when framed as "protecting your avatar."</div>
+    </div>
+
+    <!-- CONCEPT 2: SOUTH ASIA -->
+    <div class="concept-card" id="concept-southasia" style="margin-top: 4px;">
+      <div class="concept-num-col"><div class="concept-num">02</div></div>
+      <div class="concept-body">
+        <div class="concept-tag">Market Expansion — Untapped $65B Opportunity</div>
+        <div class="concept-title">South Asian fashion — the biggest gap in VTO</div>
+        <p class="concept-desc">I'm Pakistani. Every try-on tool I've used fails on South Asian garments. Dupatta draping logic, kurta length variations, lehenga volume — these require a completely different garment physics model than Western structured separates. The AI hasn't been trained on this.</p>
+        <p class="concept-desc">The market: South Asian fashion is estimated at $65B+ annually, with designers like Sabyasachi, Raw Mango, and Faraz Manan building genuinely global audiences. India's VTO market alone is projected to grow at 30%+ CAGR to 2030 — the fastest of any geography. And no Western VTO platform has meaningfully entered this space. It is completely uncontested.</p>
+        <div class="concept-insight">As intern: Document current avatar failure modes with South Asian garments — film it, show the team. Then identify 3 South Asian designer brands as potential pilot partners and write a one-page brief on why a Sabyasachi-style partnership would be as strategically significant for Doji as Peter Do was.</div>
+      </div>
+    </div>
+
+    <!-- WIREFRAME 2 -->
+    <div style="margin: 0 0 4px; padding: 24px 36px; background: var(--cream); border-left: 3px solid var(--accent);">
+      <div class="wf-label">Mid-Fidelity Wireframe · Concept 02</div>
+      <div class="wf-title">South Asian Universe — Sabyasachi Brand World</div>
+      <div class="wf-desc">The same brand universe model as Peter Do, applied to South Asian luxury fashion. Note the unique garment categories and draping layers not present in current Doji UI.</div>
+      <div class="wf-container" style="background: #e8e2d2; justify-content: center;">
+        <svg width="680" height="380" viewBox="0 0 680 380" style="max-width:100%;">
+          <!-- App header -->
+          <rect x="10" y="10" width="660" height="360" rx="12" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <!-- Top bar -->
+          <rect x="10" y="10" width="660" height="52" rx="12" fill="#2e2416"/>
+          <rect x="10" y="42" width="660" height="20" fill="#2e2416"/>
+          <text x="340" y="40" text-anchor="middle" font-size="14" fill="white" font-family="'Cormorant Garamond', serif" letter-spacing="0.15em">SABYASACHI × DOJI</text>
+          <text x="340" y="56" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="'DM Sans', sans-serif" letter-spacing="0.12em">EXCLUSIVE UNIVERSE · BRIDAL EDIT 2026</text>
+
+          <!-- Category pills (new for SA fashion) -->
+          <rect x="28" y="74" width="90" height="22" rx="11" fill="#c17f3a"/>
+          <text x="73" y="89" text-anchor="middle" font-size="8.5" fill="white" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">Lehenga</text>
+          <rect x="124" y="74" width="80" height="22" rx="11" fill="rgba(26,23,18,0.07)"/>
+          <text x="164" y="89" text-anchor="middle" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Saree</text>
+          <rect x="210" y="74" width="80" height="22" rx="11" fill="rgba(26,23,18,0.07)"/>
+          <text x="250" y="89" text-anchor="middle" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Kurta Set</text>
+          <rect x="296" y="74" width="80" height="22" rx="11" fill="rgba(26,23,18,0.07)"/>
+          <text x="336" y="89" text-anchor="middle" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Sharara</text>
+          <rect x="382" y="74" width="90" height="22" rx="11" fill="rgba(26,23,18,0.07)"/>
+          <text x="427" y="89" text-anchor="middle" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Dupatta</text>
+
+          <!-- Avatar try-on area -->
+          <rect x="28" y="106" width="240" height="240" rx="8" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <!-- Avatar figure in lehenga -->
+          <ellipse cx="148" cy="138" rx="22" ry="24" fill="#2e2416" opacity="0.12"/>
+          <!-- blouse top -->
+          <rect x="120" y="162" width="56" height="40" rx="4" fill="#c17f3a" opacity="0.3"/>
+          <!-- lehenga skirt (wide) -->
+          <path d="M110 202 Q90 260 80 320 L216 320 Q206 260 186 202 Z" fill="#c17f3a" opacity="0.18"/>
+          <!-- dupatta layer -->
+          <path d="M120 162 Q90 200 70 270" fill="none" stroke="#2e2416" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.4"/>
+          <path d="M176 162 Q200 190 220 230" fill="none" stroke="#2e2416" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.3"/>
+          <!-- draping label -->
+          <rect x="38" y="240" width="85" height="16" rx="3" fill="rgba(193,127,58,0.15)"/>
+          <text x="80" y="252" text-anchor="middle" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">DUPATTA DRAPE ✦</text>
+          <!-- NEW label -->
+          <rect x="38" y="260" width="110" height="14" rx="3" fill="rgba(26,23,18,0.06)"/>
+          <text x="92" y="271" text-anchor="middle" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">New: adjust drape style</text>
+
+          <!-- Right panel: item grid -->
+          <rect x="280" y="106" width="180" height="114" rx="6" fill="#2e2416" opacity="0.05"/>
+          <text x="370" y="128" text-anchor="middle" font-size="9.5" fill="#5a5240" font-family="'Cormorant Garamond', serif" font-style="italic">Silk Lehenga Set</text>
+          <text x="370" y="142" text-anchor="middle" font-size="8" fill="#8a8070" font-family="'DM Sans', sans-serif">Sabyasachi · ₹2,40,000</text>
+          <!-- colour swatches -->
+          <circle cx="300" cy="168" r="10" fill="#8b0000"/>
+          <circle cx="322" cy="168" r="10" fill="#c17f3a"/>
+          <circle cx="344" cy="168" r="10" fill="#1a4a2e"/>
+          <circle cx="366" cy="168" r="10" fill="#1a1712"/>
+          <circle cx="388" cy="168" r="10" fill="#6b3a6b"/>
+          <text x="300" y="192" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">Deep Red</text>
+          <text x="370" y="192" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif">Gold ✓</text>
+          <!-- CTA -->
+          <rect x="280" y="196" width="178" height="22" rx="4" fill="#1a1712"/>
+          <text x="369" y="211" text-anchor="middle" font-size="8.5" fill="white" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">ENQUIRE ON DOJI</text>
+
+          <!-- Accessories sidebar -->
+          <rect x="476" y="106" width="180" height="240" rx="6" fill="#f5f0e4"/>
+          <text x="566" y="124" text-anchor="middle" font-size="9" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">COMPLETE THE LOOK</text>
+          <!-- Accessory items -->
+          <rect x="488" y="132" width="156" height="40" rx="4" fill="white" stroke="#d4cfc5" stroke-width="1"/>
+          <rect x="496" y="140" width="24" height="24" rx="3" fill="#c17f3a" opacity="0.2"/>
+          <text x="490" y="148" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif">⬦</text>
+          <text x="528" y="148" font-size="8.5" fill="#2e2416" font-family="'DM Sans', sans-serif">Mathapatti</text>
+          <text x="528" y="160" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">Head jewellery · ₹18,000</text>
+
+          <rect x="488" y="180" width="156" height="40" rx="4" fill="white" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="528" y="196" font-size="8.5" fill="#2e2416" font-family="'DM Sans', sans-serif">Polki Choker</text>
+          <text x="528" y="208" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">Necklace · ₹65,000</text>
+
+          <rect x="488" y="228" width="156" height="40" rx="4" fill="white" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="528" y="244" font-size="8.5" fill="#2e2416" font-family="'DM Sans', sans-serif">Juttis — Embroidered</text>
+          <text x="528" y="256" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">Footwear · ₹12,000</text>
+
+          <rect x="488" y="276" width="156" height="40" rx="4" fill="rgba(193,127,58,0.1)" stroke="rgba(193,127,58,0.3)" stroke-width="1"/>
+          <text x="566" y="294" text-anchor="middle" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">TRY FULL LOOK</text>
+          <text x="566" y="308" text-anchor="middle" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">accessories now enabled</text>
+
+          <!-- Bottom caption -->
+          <text x="148" y="362" text-anchor="middle" font-size="8" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">NEW: DUPATTA DRAPE ADJUSTMENT</text>
+          <text x="460" y="362" text-anchor="middle" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">SOUTH ASIAN UNIVERSE — CONCEPT</text>
+        </svg>
+      </div>
+      <div class="wf-note">Note the dupatta drape adjustment — a garment behaviour that doesn't exist in any current VTO platform. This alone justifies new model training investment.</div>
+    </div>
+
+    <!-- CONCEPT 3: LOOK STUDIO — REFRAMED -->
+    <div class="concept-card" id="concept-accessories" style="margin-top: 4px;">
+      <div class="concept-num-col"><div class="concept-num">03</div></div>
+      <div class="concept-body">
+        <div class="concept-tag">Product Depth — Build on What's Already There</div>
+        <div class="concept-title">Look Studio exists. Now make it work for everyone.</div>
+        <p class="concept-desc">Doji already launched Look Studio — shoes, bags, accessories, 1M+ products from designer brands. That's the right call. Styling a full look, not just a top, is exactly how people actually shop. The instinct is correct. What Look Studio needs now isn't more products — it's a foundation strong enough to make the output trustworthy.</p>
+        <p class="concept-desc">Right now, users can style anything on an avatar that doesn't look like them. The person who came to Doji to try on a Bottega bag alongside her coat can do that — but if her avatar makes her look two sizes smaller, she still can't trust the result. Look Studio built the surface. Concept 04 (avatar body fidelity) builds the foundation underneath it. Both need to exist for either to deliver on their promise.</p>
+        <p class="concept-desc">There's also a discovery gap. One reviewer put it directly: a "huge list of brands" with no guidance on which to try. The most valuable upgrade to Look Studio isn't another category — it's a smarter recommendation layer. An AI-powered "Complete the Look" panel that suggests specific accessory pairings based on what the user already has on the avatar. That moves Look Studio from a catalogue you browse to a styling tool that thinks with you.</p>
+        <div class="concept-insight">As intern: Start with a Look Studio QA audit — try on as many combinations as possible, document every rendering failure, categorise by garment type. Build the evidence base for prioritisation. Then propose a focused pilot: one accessory category (sunglasses — Doji's face geometry is already captured), one brand partner, one user cohort. Ship, measure, bring the conversion data back to the roadmap discussion.</div>
+      </div>
+    </div>
+
+    <!-- WIREFRAME 3 -->
+    <div style="margin: 0 0 4px; padding: 24px 36px; background: var(--cream); border-left: 3px solid var(--accent);">
+      <div class="wf-label">Mid-Fidelity Wireframe · Concept 03</div>
+      <div class="wf-title">Look Studio — AI Complete the Look Panel</div>
+      <div class="wf-desc">The existing Look Studio canvas extended with an AI suggestion panel that drives cross-category discovery. The key upgrade isn't more products — it's smarter pairing logic.</div>
+      <div class="wf-container" style="background: #e8e2d2; justify-content: center;">
+        <svg width="680" height="360" viewBox="0 0 680 360" style="max-width:100%;">
+          <!-- Main app frame -->
+          <rect x="10" y="10" width="660" height="340" rx="12" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <!-- Top nav -->
+          <rect x="10" y="10" width="660" height="44" rx="12" fill="white"/>
+          <rect x="10" y="44" width="660" height="10" fill="white"/>
+          <line x1="10" y1="54" x2="670" y2="54" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="340" y="35" text-anchor="middle" font-size="12" fill="#1a1712" font-family="'Cormorant Garamond', serif" letter-spacing="0.1em">LOOK STUDIO</text>
+          <!-- close -->
+          <circle cx="36" cy="32" r="10" fill="rgba(26,23,18,0.06)"/>
+          <text x="36" y="36" text-anchor="middle" font-size="9" fill="#8a8070">✕</text>
+
+          <!-- LEFT: Category rail -->
+          <rect x="10" y="54" width="56" height="296" rx="0" fill="#f5f0e4"/>
+          <!-- Category icons -->
+          <!-- Tops (selected) -->
+          <rect x="14" y="64" width="48" height="48" rx="4" fill="#c17f3a" opacity="0.15"/>
+          <text x="38" y="92" text-anchor="middle" font-size="18" fill="#c17f3a">⊡</text>
+          <text x="38" y="108" text-anchor="middle" font-size="6.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">TOPS</text>
+          <rect x="14" y="118" width="48" height="48" rx="4" fill="transparent"/>
+          <text x="38" y="146" text-anchor="middle" font-size="18" fill="#8a8070">⊟</text>
+          <text x="38" y="162" text-anchor="middle" font-size="6.5" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">BOTTOMS</text>
+          <rect x="14" y="172" width="48" height="48" rx="4" fill="transparent"/>
+          <text x="38" y="200" text-anchor="middle" font-size="18" fill="#8a8070">◦</text>
+          <text x="38" y="216" text-anchor="middle" font-size="6.5" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">SHOES</text>
+          <!-- Accessories NEW -->
+          <rect x="14" y="226" width="48" height="48" rx="4" fill="rgba(193,127,58,0.06)" stroke="rgba(193,127,58,0.3)" stroke-width="1"/>
+          <text x="38" y="254" text-anchor="middle" font-size="18" fill="#c17f3a">◇</text>
+          <text x="38" y="270" text-anchor="middle" font-size="6.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">ACCESORY</text>
+          <rect x="26" y="225" width="26" height="10" rx="3" fill="#c17f3a"/>
+          <text x="39" y="233" text-anchor="middle" font-size="5.5" fill="white" font-family="'DM Sans', sans-serif" letter-spacing="0.04em">NEW</text>
+
+          <rect x="14" y="280" width="48" height="48" rx="4" fill="transparent"/>
+          <text x="38" y="308" text-anchor="middle" font-size="18" fill="#8a8070">▱</text>
+          <text x="38" y="324" text-anchor="middle" font-size="6.5" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">BAGS</text>
+
+          <!-- CENTER: Avatar canvas -->
+          <rect x="66" y="54" width="280" height="296" fill="white"/>
+          <!-- Avatar -->
+          <ellipse cx="206" cy="112" rx="30" ry="32" fill="#2e2416" opacity="0.1"/>
+          <!-- outfit: top -->
+          <rect x="170" y="144" width="72" height="68" rx="5" fill="#2e2416" opacity="0.18"/>
+          <!-- bottom -->
+          <rect x="172" y="212" width="68" height="90" rx="4" fill="#2e2416" opacity="0.12"/>
+          <!-- shoes (highlighted, being selected) -->
+          <rect x="175" y="304" width="22" height="16" rx="4" fill="#c17f3a" opacity="0.4"/>
+          <rect x="215" y="304" width="22" height="16" rx="4" fill="#c17f3a" opacity="0.4"/>
+          <!-- sunglasses overlay -->
+          <ellipse cx="192" cy="106" rx="12" ry="8" fill="none" stroke="#c17f3a" stroke-width="1.5"/>
+          <ellipse cx="220" cy="106" rx="12" ry="8" fill="none" stroke="#c17f3a" stroke-width="1.5"/>
+          <line x1="204" y1="106" x2="208" y2="106" stroke="#c17f3a" stroke-width="1.5"/>
+          <!-- necklace -->
+          <path d="M183 152 Q206 166 229 152" fill="none" stroke="#c17f3a" stroke-width="1" stroke-dasharray="2,1.5" opacity="0.6"/>
+          <!-- Selection rings -->
+          <rect x="172" y="300" width="68" height="26" rx="6" fill="none" stroke="#c17f3a" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="206" y="342" text-anchor="middle" font-size="7" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">SELECTING SHOES</text>
+
+          <!-- RIGHT: Item browser -->
+          <rect x="346" y="54" width="324" height="296" fill="white"/>
+          <!-- Accessories tab active -->
+          <rect x="346" y="54" width="324" height="32" fill="#f5f0e4"/>
+          <text x="408" y="73" text-anchor="middle" font-size="8.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">ACCESSORIES</text>
+          <text x="500" y="73" text-anchor="middle" font-size="8.5" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">AI COMPLETE</text>
+          <text x="610" y="73" text-anchor="middle" font-size="8.5" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">SAVED</text>
+          <line x1="375" y1="86" x2="441" y2="86" stroke="#c17f3a" stroke-width="2"/>
+
+          <!-- Subcategory pills -->
+          <rect x="356" y="92" width="54" height="18" rx="9" fill="#c17f3a"/>
+          <text x="383" y="104" text-anchor="middle" font-size="7.5" fill="white" font-family="'DM Sans', sans-serif">Sunglasses</text>
+          <rect x="416" y="92" width="50" height="18" rx="9" fill="rgba(26,23,18,0.07)"/>
+          <text x="441" y="104" text-anchor="middle" font-size="7.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Necklace</text>
+          <rect x="472" y="92" width="36" height="18" rx="9" fill="rgba(26,23,18,0.07)"/>
+          <text x="490" y="104" text-anchor="middle" font-size="7.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Bags</text>
+          <rect x="514" y="92" width="36" height="18" rx="9" fill="rgba(26,23,18,0.07)"/>
+          <text x="532" y="104" text-anchor="middle" font-size="7.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Rings</text>
+
+          <!-- Item grid -->
+          <!-- Row 1 -->
+          <rect x="356" y="118" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#c17f3a" stroke-width="1.5"/>
+          <text x="395" y="162" text-anchor="middle" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif">Slim Oval · $320</text>
+          <rect x="442" y="118" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="481" y="162" text-anchor="middle" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif">Shield · $195</text>
+          <rect x="528" y="118" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="567" y="162" text-anchor="middle" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif">Cat Eye · $285</text>
+          <rect x="614" y="118" width="68" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <text x="648" y="162" text-anchor="middle" font-size="7" fill="#8a8070" font-family="'DM Sans', sans-serif">Round · $160</text>
+
+          <!-- Row 2 -->
+          <rect x="356" y="196" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <rect x="442" y="196" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <rect x="528" y="196" width="78" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+          <rect x="614" y="196" width="68" height="70" rx="4" fill="#f5f0e4" stroke="#d4cfc5" stroke-width="1"/>
+
+          <!-- AI complete section -->
+          <rect x="356" y="274" width="326" height="60" rx="6" fill="rgba(193,127,58,0.06)" stroke="rgba(193,127,58,0.2)" stroke-width="1"/>
+          <text x="380" y="292" font-size="8" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">✦  AI COMPLETE THE LOOK</text>
+          <text x="380" y="308" font-size="8" fill="#8a8070" font-family="'DM Sans', sans-serif">Based on your selections: Bottega bag + Loewe necklace + Celine shades</text>
+          <rect x="560" y="284" width="112" height="24" rx="4" fill="#1a1712"/>
+          <text x="616" y="300" text-anchor="middle" font-size="8" fill="white" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">TRY ALL THREE</text>
+        </svg>
+      </div>
+      <div class="wf-note">The "AI Complete the Look" panel transforms Look Studio from a catalogue you scroll into a stylist that makes suggestions. That's what turns browsing into buying — and it's the upgrade that makes 1M+ products feel curated rather than overwhelming.</div>
+    </div>
+
+    <!-- CONCEPT 4: AVATAR BODY FIDELITY -->
+    <div class="concept-card" id="concept-avatar" style="margin-top: 4px;">
+      <div class="concept-num-col"><div class="concept-num">04</div></div>
+      <div class="concept-body">
+        <div class="concept-tag">Core Product Quality — The Foundation Under Look Studio</div>
+        <div class="concept-title">The avatar should look like you, not a slimmer version of you</div>
+        <p class="concept-desc">This one came directly from real users. App Store reviews say it plainly: the avatar makes everyone look skinnier than they are, which undermines the entire premise — including Look Studio. If I can't trust that the avatar is actually me, I can't trust how the clothes look on it. Look Studio built a beautiful surface. This is the foundation underneath it.</p>
+        <p class="concept-desc">The fix has two layers. First: body sculpting tools at avatar creation — let users pinch and pull to match their actual proportions. Not just height and weight sliders, but real body geometry: shoulder width, belly curve, hip-to-waist ratio. Women with PCOS carry weight differently than someone with the same BMI. Someone petite with a fuller chest doesn't fit the same top as someone taller. The avatar needs to hold that nuance.</p>
+        <p class="concept-desc">Second: garment adjustment controls. Clothes don't sit the same way on every body — and users know this. A miniskirt turning into a maxi on the avatar (another review complaint) is a model failure. Beyond fixing that bug, there's a real opportunity to let users actively style: shorten a hemline, adjust how a blouse tucks, change the drape of a scarf. The same top worn open vs. buttoned is a completely different look. Doji could be the first platform to let you experiment with that before you buy.</p>
+        <div class="concept-insight">As intern: Structured audit of App Store and Play Store reviews, categorising every mention of avatar accuracy into body representation issues vs. garment rendering issues. That audit becomes a brief. The brief becomes a backlog. I'd push for at least one body geometry improvement to ship within the internship window — even just adding belly/hip curve controls would meaningfully expand the user base who feel seen by the avatar. And it would make Look Studio's 1M+ products actually worth trusting.</div>
+      </div>
+    </div>
+
+    <!-- USER REVIEWS EVIDENCE -->
+    <div style="margin: 4px 0 0; padding: 24px 36px; background: var(--deep); border-left: 3px solid var(--accent);">
+      <div class="wf-label" style="color: var(--accent-light);">Real User Feedback · App Store Reviews</div>
+      <div class="wf-title" style="color: var(--paper);">What users are actually saying</div>
+      <div class="wf-desc" style="color: rgba(245,240,228,0.6);">Three reviews that informed this concept directly. These aren't edge cases — they're the same complaint from different angles.</div>
+      <div class="review-screenshots">
+        <div class="screenshot-slot">
+          <img src="TNRO08.png" alt="App Store review: avatar doesn't look like me, flat rendering on designer garments"/>
+          <span class="screenshot-slot-label" style="display:none;">Review 1</span>
+        </div>
+        <div class="screenshot-slot">
+          <img src="SFMurderino.png" alt="App Store review: avatar makes everyone look skinnier"/>
+          <span class="screenshot-slot-label" style="display:none;">Review 2</span>
+        </div>
+        <div class="screenshot-slot">
+          <img src="dollfaceddiva.png" alt="App Store review: miniskirts turn into long skirts"/>
+          <span class="screenshot-slot-label" style="display:none;">Review 3</span>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 4px;">
+        <div class="screenshot-caption" style="color: rgba(245,240,228,0.45);">"The avatar doesn't look like me. Flat on designer cuts." — TNRO08, ★★★★☆</div>
+        <div class="screenshot-caption" style="color: rgba(245,240,228,0.45);">"Makes everyone skinnier — can't judge actual fit." — SFMurderino, ★★★☆☆</div>
+        <div class="screenshot-caption" style="color: rgba(245,240,228,0.45);">"Miniskirts turn into long skirts." — doll faced diva, ★★★★☆</div>
+      </div>
+    </div>
+
+    <!-- WIREFRAME 4: BODY SCULPT -->
+    <div style="margin: 4px 0 0; padding: 24px 36px; background: var(--cream); border-left: 3px solid var(--accent);">
+      <div class="wf-label">Mid-Fidelity Wireframe · Concept 04</div>
+      <div class="wf-title">Body Sculpt Mode + Garment Adjust Controls</div>
+      <div class="wf-desc">A body geometry editor during avatar creation, and garment adjustment handles on the try-on canvas. Two separate surfaces, one coherent upgrade to avatar fidelity.</div>
+      <div class="wf-container" style="background: #e8e2d2; justify-content: center;">
+        <svg width="680" height="380" viewBox="0 0 680 380" style="max-width:100%;">
+          <!-- LEFT PANEL: Body sculpt sliders -->
+          <rect x="10" y="10" width="300" height="360" rx="12" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <rect x="10" y="10" width="300" height="48" rx="12" fill="#1a1712"/>
+          <rect x="10" y="42" width="300" height="16" fill="#1a1712"/>
+          <text x="160" y="38" text-anchor="middle" font-size="12" fill="white" font-family="'Cormorant Garamond', serif" letter-spacing="0.12em">BODY SCULPT</text>
+          <text x="160" y="54" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.45)" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">MATCH YOUR ACTUAL SHAPE</text>
+          <!-- avatar preview -->
+          <rect x="80" y="72" width="140" height="160" rx="6" fill="#f5f0e4"/>
+          <!-- avatar body rough shape -->
+          <ellipse cx="150" cy="100" rx="18" ry="19" fill="#2e2416" opacity="0.12"/>
+          <path d="M128 120 Q118 170 122 230 L178 230 Q182 170 172 120 Z" fill="#c17f3a" opacity="0.15" id="bodyPath"/>
+          <!-- handles on body (draggable points) -->
+          <circle cx="118" cy="152" r="5" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <circle cx="182" cy="152" r="5" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <circle cx="122" cy="185" r="5" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <circle cx="178" cy="185" r="5" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <text x="104" y="148" font-size="7" fill="#c17f3a" font-family="'DM Sans', sans-serif">waist</text>
+          <text x="184" y="190" font-size="7" fill="#c17f3a" font-family="'DM Sans', sans-serif">hip</text>
+          <!-- Sliders -->
+          <text x="24" y="254" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Shoulder width</text>
+          <rect x="24" y="260" width="262" height="4" rx="2" fill="#d4cfc5"/>
+          <rect x="24" y="260" width="160" height="4" rx="2" fill="#c17f3a"/>
+          <circle cx="184" cy="262" r="7" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+
+          <text x="24" y="284" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Belly curve</text>
+          <rect x="24" y="290" width="262" height="4" rx="2" fill="#d4cfc5"/>
+          <rect x="24" y="290" width="100" height="4" rx="2" fill="#c17f3a"/>
+          <circle cx="124" cy="292" r="7" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <!-- Helpful body type tags -->
+          <text x="24" y="314" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">Hip-to-waist ratio</text>
+          <rect x="24" y="320" width="262" height="4" rx="2" fill="#d4cfc5"/>
+          <rect x="24" y="320" width="195" height="4" rx="2" fill="#c17f3a"/>
+          <circle cx="219" cy="322" r="7" fill="white" stroke="#c17f3a" stroke-width="1.5"/>
+          <!-- tag suggestions -->
+          <text x="24" y="344" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">Quick select:</text>
+          <rect x="95" y="334" width="46" height="16" rx="8" fill="rgba(26,23,18,0.07)"/>
+          <text x="118" y="346" text-anchor="middle" font-size="7" fill="#5a5240" font-family="'DM Sans', sans-serif">Hourglass</text>
+          <rect x="147" y="334" width="38" height="16" rx="8" fill="rgba(193,127,58,0.15)" stroke="rgba(193,127,58,0.4)" stroke-width="1"/>
+          <text x="166" y="346" text-anchor="middle" font-size="7" fill="#c17f3a" font-family="'DM Sans', sans-serif">Pear ✓</text>
+          <rect x="191" y="334" width="34" height="16" rx="8" fill="rgba(26,23,18,0.07)"/>
+          <text x="208" y="346" text-anchor="middle" font-size="7" fill="#5a5240" font-family="'DM Sans', sans-serif">Apple</text>
+          <rect x="231" y="334" width="44" height="16" rx="8" fill="rgba(26,23,18,0.07)"/>
+          <text x="253" y="346" text-anchor="middle" font-size="7" fill="#5a5240" font-family="'DM Sans', sans-serif">Athletic</text>
+          <!-- Panel label -->
+          <text x="24" y="368" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">DRAG HANDLES OR USE SLIDERS</text>
+
+          <!-- RIGHT PANEL: Garment adjust on try-on canvas -->
+          <rect x="326" y="10" width="344" height="360" rx="12" fill="white" stroke="#d4cfc5" stroke-width="1.5"/>
+          <rect x="326" y="10" width="344" height="48" rx="12" fill="#1a1712"/>
+          <rect x="326" y="42" width="344" height="16" fill="#1a1712"/>
+          <text x="498" y="38" text-anchor="middle" font-size="12" fill="white" font-family="'Cormorant Garamond', serif" letter-spacing="0.12em">GARMENT ADJUST</text>
+          <text x="498" y="54" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.45)" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">STYLE IT HOW YOU'D WEAR IT</text>
+
+          <!-- Avatar with garment handles -->
+          <rect x="370" y="68" width="120" height="240" rx="6" fill="#f5f0e4"/>
+          <ellipse cx="430" cy="96" rx="18" ry="19" fill="#2e2416" opacity="0.1"/>
+          <!-- top/blouse -->
+          <rect x="408" y="115" width="44" height="50" rx="3" fill="#c17f3a" opacity="0.25"/>
+          <!-- Hemline handle (drag up/down) -->
+          <rect x="396" y="162" width="68" height="3" rx="1.5" fill="#c17f3a" opacity="0.7"/>
+          <rect x="424" y="156" width="12" height="14" rx="3" fill="#c17f3a"/>
+          <text x="430" y="165" text-anchor="middle" font-size="7" fill="white" font-family="'DM Sans', sans-serif">↕</text>
+          <text x="490" y="163" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif">hem</text>
+          <!-- skirt -->
+          <path d="M408 165 Q390 210 388 290 L472 290 Q470 210 452 165 Z" fill="#2e2416" opacity="0.1"/>
+          <!-- length handle -->
+          <rect x="416" y="288" width="28" height="3" rx="1.5" fill="#c17f3a" opacity="0.7"/>
+          <rect x="422" y="282" width="16" height="14" rx="3" fill="#c17f3a"/>
+          <text x="430" y="291" text-anchor="middle" font-size="7" fill="white" font-family="'DM Sans', sans-serif">↕</text>
+          <text x="490" y="290" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif">length</text>
+
+          <!-- Right: Adjust menu -->
+          <rect x="504" y="68" width="154" height="240" rx="6" fill="#f5f0e4"/>
+          <text x="512" y="88" font-size="9" fill="#8a8070" font-family="'DM Sans', sans-serif" letter-spacing="0.1em">ADJUSTMENTS</text>
+          <!-- options list -->
+          <rect x="512" y="98" width="138" height="30" rx="4" fill="rgba(193,127,58,0.12)" stroke="rgba(193,127,58,0.3)" stroke-width="1"/>
+          <text x="524" y="116" font-size="8.5" fill="#c17f3a" font-family="'DM Sans', sans-serif">↕ Hem length</text>
+          <rect x="512" y="134" width="138" height="30" rx="4" fill="rgba(26,23,18,0.05)"/>
+          <text x="524" y="153" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">↔ Shoulder width</text>
+          <rect x="512" y="170" width="138" height="30" rx="4" fill="rgba(26,23,18,0.05)"/>
+          <text x="524" y="189" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">◌ Tuck / untuck</text>
+          <rect x="512" y="206" width="138" height="30" rx="4" fill="rgba(26,23,18,0.05)"/>
+          <text x="524" y="225" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">⟳ Drape style</text>
+          <rect x="512" y="242" width="138" height="30" rx="4" fill="rgba(26,23,18,0.05)"/>
+          <text x="524" y="261" font-size="8.5" fill="#5a5240" font-family="'DM Sans', sans-serif">◇ Knot / tie scarf</text>
+
+          <!-- South Asian draping note -->
+          <rect x="336" y="320" width="322" height="38" rx="4" fill="rgba(193,127,58,0.06)" stroke="rgba(193,127,58,0.2)" stroke-width="1"/>
+          <text x="348" y="334" font-size="7.5" fill="#c17f3a" font-family="'DM Sans', sans-serif" letter-spacing="0.08em">✦  DRAPE STYLE — also enables South Asian garment logic:</text>
+          <text x="348" y="350" font-size="7.5" fill="#8a8070" font-family="'DM Sans', sans-serif">how a choli sits, how to pin a saree pallav, how a dupatta wraps — all one control surface</text>
+        </svg>
+      </div>
+      <div class="wf-note">The drape style control unlocks South Asian garment logic (concept 02). Building it once serves both use cases — and makes Look Studio's existing 1M+ products trustworthy for a much wider user base.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ 03: REVENUE MODEL ══ -->
+<section>
+  <div class="section-label">03 — Business case</div>
+  <h2>How Doji becomes<br>a <em>revenue engine</em></h2>
+  <p>Most consumer apps pick one monetization model. Doji is in a position to build multiple revenue streams that are structurally complementary — each one strengthening the others. This is the McKinsey framing: understand the value creation flywheel before choosing where to extract from it.</p>
+
+  <!-- FLYWHEEL DIAGRAM -->
+  <div style="margin: 48px 0; padding: 32px; background: var(--cream); border: 1px solid var(--line-strong);">
+    <div class="chart-title" style="margin-bottom: 6px;">The Doji Value Flywheel</div>
+    <div class="chart-subtitle" style="margin-bottom: 20px;">How each element reinforces the next</div>
+    <svg width="100%" height="280" viewBox="0 0 700 280" style="max-width:700px; display:block; margin:0 auto;">
+      <!-- Central brand -->
+      <ellipse cx="350" cy="140" rx="62" ry="46" fill="var(--deep)"/>
+      <text x="350" y="135" text-anchor="middle" font-size="11" fill="var(--accent-light)" font-family="'Cormorant Garamond', serif" font-style="italic">Photorealistic</text>
+      <text x="350" y="150" text-anchor="middle" font-size="11" fill="var(--accent-light)" font-family="'Cormorant Garamond', serif" font-style="italic">Avatar</text>
+      <text x="350" y="163" text-anchor="middle" font-size="8.5" fill="rgba(245,240,232,0.5)" font-family="'DM Sans', sans-serif">Core Technology</text>
+
+      <!-- Node: More Users -->
+      <ellipse cx="140" cy="70" rx="80" ry="38" fill="var(--cream)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="140" y="65" text-anchor="middle" font-size="10" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">User Growth</text>
+      <text x="140" y="80" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">Social sharing drives</text>
+      <text x="140" y="92" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">organic acquisition</text>
+
+      <!-- Node: Brand Deals -->
+      <ellipse cx="560" cy="70" rx="80" ry="38" fill="var(--cream)" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="560" y="65" text-anchor="middle" font-size="10" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">Brand Partnerships</text>
+      <text x="560" y="80" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">More users = more</text>
+      <text x="560" y="92" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">valuable exclusives</text>
+
+      <!-- Node: Revenue -->
+      <ellipse cx="140" cy="210" rx="80" ry="38" fill="var(--cream)" stroke="var(--line-strong)" stroke-width="1"/>
+      <text x="140" y="205" text-anchor="middle" font-size="10" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">Affiliate Revenue</text>
+      <text x="140" y="220" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">8–12% on purchases</text>
+      <text x="140" y="232" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">made through the app</text>
+
+      <!-- Node: Data -->
+      <ellipse cx="560" cy="210" rx="80" ry="38" fill="var(--cream)" stroke="var(--line-strong)" stroke-width="1"/>
+      <text x="560" y="205" text-anchor="middle" font-size="10" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">Style Data</text>
+      <text x="560" y="220" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">Trend intelligence</text>
+      <text x="560" y="232" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-family="'DM Sans', sans-serif">sold to brands</text>
+
+      <!-- Arrows -->
+      <path d="M220 82 Q280 60 288 100" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arr)"/>
+      <path d="M412 100 Q420 60 480 75" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arr)"/>
+      <path d="M288 178 Q260 200 220 205" fill="none" stroke="rgba(26,23,18,0.2)" stroke-width="1" marker-end="url(#arr2)"/>
+      <path d="M412 178 Q440 200 480 205" fill="none" stroke="rgba(26,23,18,0.2)" stroke-width="1" marker-end="url(#arr2)"/>
+      <path d="M140 172 Q140 160 200 155" fill="none" stroke="rgba(26,23,18,0.15)" stroke-width="1" marker-end="url(#arr2)"/>
+      <path d="M560 172 Q560 160 500 155" fill="none" stroke="rgba(26,23,18,0.15)" stroke-width="1" marker-end="url(#arr2)"/>
+
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="var(--accent)"/>
+        </marker>
+        <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="2.5" orient="auto">
+          <path d="M0,0 L0,5 L6,2.5 z" fill="rgba(26,23,18,0.3)"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- REVENUE STREAMS GRID -->
+  <div class="rev-model">
+    <div class="rev-cell rev-cell-accent">
+      <span class="rev-icon">◈</span>
+      <div class="rev-title">Affiliate Commission</div>
+      <span class="rev-val">8–12%</span>
+      <div class="rev-desc">On every purchase made through Doji. Fashion affiliate programs average 8–15% for luxury brands (Nordstrom, Khaite, etc.). With 10,000 MAU making a single $400 purchase/month = <strong>$3.2M–4.8M ARR</strong> from commissions alone. This scales linearly with GMV.</div>
+    </div>
+    <div class="rev-cell">
+      <span class="rev-icon">◇</span>
+      <div class="rev-title">Brand Universe Fees</div>
+      <span class="rev-val">$25k–$200k</span>
+      <div class="rev-desc">Exclusive drops like Peter Do's PD-168. Brands pay for the universe creation, garment digitisation, and campaign placement. As Doji's user base grows, this fee scales up. Five exclusive brand universes per quarter at $50k average = <strong>$1M/quarter in partnership revenue.</strong></div>
+    </div>
+    <div class="rev-cell">
+      <span class="rev-icon">◉</span>
+      <div class="rev-title">Premium Subscription</div>
+      <span class="rev-val">$12–18/mo</span>
+      <div class="rev-desc">Unlocks advanced features: full Style Chapter archive, unlimited style eras, priority avatar regeneration, early brand drops. At 5% conversion of MAU to premium — standard for social/fashion apps — 500 paying users at $15/mo = <strong>$90k MRR, $1.08M ARR</strong> at modest scale.</div>
+    </div>
+    <div class="rev-cell rev-cell-accent">
+      <span class="rev-icon">◌</span>
+      <div class="rev-title">Trend Intelligence Data</div>
+      <span class="rev-val">$50k–$500k</span>
+      <div class="rev-desc">Anonymised, aggregated style behaviour data is extraordinarily valuable to brands. What colours are 22-30 year olds trying on but not buying? Which silhouettes are saved vs. purchased? This is first-party behavioural data that no survey or focus group can capture. Sold as quarterly brand insights reports.</div>
+    </div>
+  </div>
+
+  <!-- REVENUE PROJECTION CHART -->
+  <div class="chart-wrap">
+    <div class="chart-title">Projected Revenue Mix</div>
+    <div class="chart-subtitle">By stream · Year 1–3 Intern Horizon · $M</div>
+
+    <svg width="100%" height="240" viewBox="0 0 640 240" style="max-width:640px;">
+      <!-- Y axis labels -->
+      <text x="28" y="28" text-anchor="end" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">$5M</text>
+      <text x="28" y="88" text-anchor="end" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">$3M</text>
+      <text x="28" y="148" text-anchor="end" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">$1.5M</text>
+      <text x="28" y="195" text-anchor="end" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">$0.5M</text>
+      <!-- Y grid lines -->
+      <line x1="38" y1="26" x2="620" y2="26" stroke="rgba(26,23,18,0.06)" stroke-width="1"/>
+      <line x1="38" y1="86" x2="620" y2="86" stroke="rgba(26,23,18,0.06)" stroke-width="1"/>
+      <line x1="38" y1="146" x2="620" y2="146" stroke="rgba(26,23,18,0.06)" stroke-width="1"/>
+      <line x1="38" y1="196" x2="620" y2="196" stroke="rgba(26,23,18,0.06)" stroke-width="1"/>
+      <!-- X axis -->
+      <line x1="38" y1="210" x2="620" y2="210" stroke="rgba(26,23,18,0.15)" stroke-width="1"/>
+
+      <!-- YEAR 1 stacked bar -->
+      <text x="155" y="226" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">Year 1</text>
+      <!-- Affiliate ($1.2M) -->
+      <rect x="80" y="162" width="70" height="48" fill="var(--chart-1)" rx="2 2 0 0"/>
+      <!-- Brand fees ($0.6M) -->
+      <rect x="80" y="138" width="70" height="24" fill="var(--chart-2)" opacity="0.7"/>
+      <!-- Subscription ($0.2M) -->
+      <rect x="80" y="130" width="70" height="8" fill="var(--chart-3)"/>
+      <text x="115" y="120" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">$2M</text>
+
+      <!-- YEAR 2 stacked bar -->
+      <text x="335" y="226" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">Year 2</text>
+      <!-- Affiliate ($2.8M) -->
+      <rect x="260" y="98" width="70" height="112" fill="var(--chart-1)" rx="2 2 0 0"/>
+      <!-- Brand fees ($1.2M) -->
+      <rect x="260" y="50" width="70" height="48" fill="var(--chart-2)" opacity="0.7"/>
+      <!-- Subscription ($0.5M) -->
+      <rect x="260" y="30" width="70" height="20" fill="var(--chart-3)"/>
+      <!-- Data ($0.2M) -->
+      <rect x="260" y="22" width="70" height="8" fill="var(--chart-4)"/>
+      <text x="295" y="12" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">$4.7M</text>
+
+      <!-- YEAR 3 stacked bar -->
+      <text x="520" y="226" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" letter-spacing="0.06em">Year 3</text>
+      <!-- Affiliate ($5.5M) -->
+      <rect x="450" y="10" width="70" height="200" fill="var(--chart-1)" opacity="0.9" rx="2 2 0 0"/>
+      <!-- too tall — segment properly -->
+      <rect x="450" y="78" width="70" height="132" fill="var(--chart-1)" rx="0"/>
+      <!-- Brand fees ($2.5M) -->
+      <rect x="450" y="28" width="70" height="50" fill="var(--chart-2)" opacity="0.7"/>
+      <!-- Subscription ($1.2M) -->
+      <rect x="450" y="12" width="70" height="16" fill="var(--chart-3)"/>
+      <!-- Data ($0.8M) -->
+      <rect x="450" y="6" width="70" height="6" fill="var(--chart-4)"/>
+      <text x="485" y="0" text-anchor="middle" font-size="9" fill="var(--ink)" font-family="'DM Sans', sans-serif" font-weight="500">$10M+</text>
+
+      <!-- Legend -->
+      <rect x="38" y="236" width="10" height="10" fill="var(--chart-1)"/>
+      <text x="52" y="245" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">Affiliate</text>
+      <rect x="110" y="236" width="10" height="10" fill="var(--chart-2)" opacity="0.7"/>
+      <text x="124" y="245" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">Brand Deals</text>
+      <rect x="200" y="236" width="10" height="10" fill="var(--chart-3)"/>
+      <text x="214" y="245" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">Subscription</text>
+      <rect x="290" y="236" width="10" height="10" fill="var(--chart-4)"/>
+      <text x="304" y="245" font-size="8" fill="var(--muted)" font-family="'DM Sans', sans-serif">Data/Insights</text>
+    </svg>
+    <div class="chart-source">Conservative projections. Affiliate at 8% commission on estimated GMV. Brand deals assume 5-8 exclusive universes/year by Year 3. Not accounting for potential South Asian market expansion.</div>
+  </div>
+
+  <!-- SOUTH ASIA MARKET OPPORTUNITY -->
+  <div class="chart-wrap">
+    <div class="chart-title">South Asian VTO Market</div>
+    <div class="chart-subtitle">India alone — projected CAGR 2025–2030</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line); margin: 24px 0;">
+      <div style="background: var(--paper); padding: 24px;">
+        <span class="stat-num-lg" style="font-size:36px;">30%+</span>
+        <div class="stat-desc">India VTO market CAGR — fastest growing geography globally (Grand View Research, 2025)</div>
+      </div>
+      <div style="background: var(--paper); padding: 24px;">
+        <span class="stat-num-lg" style="font-size:36px;">$65B</span>
+        <div class="stat-desc">South Asian fashion industry annual revenue — Sabyasachi alone is valued at ~$300M</div>
+      </div>
+      <div style="background: var(--paper); padding: 24px;">
+        <span class="stat-num-lg" style="font-size:36px;">0</span>
+        <div class="stat-desc">Major VTO platforms serving South Asian fashion garments with native draping support. Completely uncontested market.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATEGIC PRIORITY MATRIX (2×2) -->
+  <div class="chart-wrap">
+    <div class="chart-title">Strategic Priority Matrix</div>
+    <div class="chart-subtitle">Effort vs. Revenue Impact — Where to focus</div>
+    <div class="matrix-wrap" style="padding-left: 56px;">
+      <div class="matrix-y-label">Revenue Impact →</div>
+      <div class="matrix-grid">
+        <!-- Top-left: High revenue, low effort = DO NOW -->
+        <div class="matrix-cell" style="background: rgba(193,127,58,0.08);">
+          <div class="matrix-cell-label">High Impact / Low Effort</div>
+          <div class="matrix-cell-title" style="color: var(--accent);">Do First</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">Affiliate commission model</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">Biometric safety feature</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">Social feed (built in prototype)</span>
+            </div>
+          </div>
+        </div>
+        <!-- Top-right: High revenue, high effort = PLAN NOW -->
+        <div class="matrix-cell">
+          <div class="matrix-cell-label">High Impact / High Effort</div>
+          <div class="matrix-cell-title">Plan & Invest</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--chart-3);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">South Asian market expansion</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--chart-3);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">Full accessories ecosystem</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--chart-3);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--ink);">Brand trend data product</span>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom-left: Low revenue, low effort = FILL IN -->
+        <div class="matrix-cell">
+          <div class="matrix-cell-label">Low Impact / Low Effort</div>
+          <div class="matrix-cell-title">Nice to Have</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:rgba(138,128,112,0.5);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--muted);">Style Twin matching</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:rgba(138,128,112,0.5);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--muted);">Almost Bought feed</span>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom-right: Low revenue, high effort = AVOID -->
+        <div class="matrix-cell">
+          <div class="matrix-cell-label">Low Impact / High Effort</div>
+          <div class="matrix-cell-title" style="color:var(--muted);">Avoid (for now)</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:rgba(138,128,112,0.3);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--muted);">Desktop web app</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:rgba(138,128,112,0.3);flex-shrink:0;"></div>
+              <span style="font-size:11px; color:var(--muted);">Physical mirror integrations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="matrix-x-label">Implementation Effort →</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <q>The affiliate model alone is the cleanest path to $10M ARR — it requires no new product development, only growth. The social features are what create the organic acquisition loop that gets you there without paying for it.</q>
+    <div class="pull-quote-attr">Revenue thesis: social → growth → GMV → affiliate commission</div>
+  </div>
+</section>
+
+<!-- ══ 04: HOW I'D WORK ══ -->
+<section>
+  <div class="section-label">04 — 90-day execution</div>
+  <h2>What I'd actually<br>do as an <em>intern</em></h2>
+  <p>Not a strategy deck. A working rhythm. The kind of intern who makes the team better every week, not just at the end of a project.</p>
+
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-dot">1</div>
+      <div class="tl-body">
+        <div class="tl-week">Weeks 1–2 · Listen before speaking</div>
+        <div class="tl-title">Absorb everything, suggest nothing</div>
+        <p class="tl-desc">Read every Slack I have access to. QA the app every day, building a living bug doc with UX implications attached. Understand the arguments that shaped existing decisions before I question them. Come in with hypotheses, hold them lightly.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot">2</div>
+      <div class="tl-body">
+        <div class="tl-week">Weeks 3–5 · QA as product research</div>
+        <div class="tl-title">Every bug is a user expectation being violated</div>
+        <p class="tl-desc">I document bugs not just as reproduction steps but as broken user mental models. On SwapCircle, a bug in our swap flow became a full UX redesign because I asked "what did the user expect would happen?" rather than just "what went wrong?" I'll bring that lens here — and flag when a fix reveals a deeper design question worth discussing.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot">3</div>
+      <div class="tl-body">
+        <div class="tl-week">Weeks 4–8 · User research cadence</div>
+        <div class="tl-title">2 interviews/week, synthesised into 1 Slack post</div>
+        <p class="tl-desc">I'll propose a standing rhythm: two user interviews weekly, rotating across new users, power users, and churned users post-avatar-creation. I've run this format before (SwapCircle MVP study, Buenos Aires) — the key is the synthesis. No 30-slide deck. One paragraph in Slack every Friday with the single most important thing I heard that week.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot">4</div>
+      <div class="tl-body">
+        <div class="tl-week">Weeks 6–12 · Own one project end-to-end</div>
+        <div class="tl-title">From insight to shipped. Even small.</div>
+        <p class="tl-desc">I want to take one user insight through the full loop — from interview quote to shipped thing to measured result. My candidate: the biometric safety brief. I'll run the research, write the brief, and advocate for it in whatever forum is right. Whether it gets built while I'm there is secondary. The practice of closing the loop is what matters.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot">5</div>
+      <div class="tl-body">
+        <div class="tl-week">Ongoing · Put the product in front of people</div>
+        <div class="tl-title">Make reels. Read the comments. Iterate.</div>
+        <p class="tl-desc">The fastest and most honest user research channel Doji has access to right now is social media — and I'd push to use it seriously. Short-form videos showing exactly how the try-on works, what's possible with different garment types, behind-the-scenes of avatar creation. Not polished brand content — real demos that invite real reactions.</p>
+        <p class="tl-desc">The comments section is a free, unfiltered usability study. "Why does my skirt look longer?" "Can I try a hijab?" "It made me look smaller than I am." Every complaint is a bug report. Every question is a missing feature. Every "omg this is so cool" is confirmation of what's working. I'd screenshot and tag everything into a running insights doc, and bring the patterns to the team weekly. The product improves faster when you stop only talking to users you recruited and start listening to the ones who showed up on their own.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 05: WHY ME ══ -->
+<section>
+  <div class="section-label">05 — Why me, specifically</div>
+  <h2>What makes me<br><em>unusual</em> for this role</h2>
+
+  <h3>I build for people who weren't in the original user research</h3>
+  <p>I'm Pakistani. I founded Khwaish Shop — a platform connecting underprivileged Pakistani artisans to global buyers. I've spent years designing for contexts where the "default user" assumption fails. At Doji, that translates into a standing habit of asking: who does the avatar not work for yet, and what would it cost to fix it?</p>
+
+  <h3>I close the loop between user research and shipped code</h3>
+  <p>At SwapCircle I'm both product designer and frontend lead. I've run user interviews that reshuffled our feature roadmap, and then built the features that came out of them. That loop — listen, synthesize, make, measure — is the one I've practiced most. At a small team, it's not a nice-to-have.</p>
+
+  <h3>I think in systems and stories simultaneously</h3>
+  <p>The revenue flywheel above is systems thinking. The Style Chapter manifesto concept is storytelling. Good product work requires both simultaneously — knowing the business case for a feature without losing sight of how it feels to the person using it. This case study is an attempt to demonstrate both in the same document.</p>
+
+  <!-- PERSONAL STATS -->
+  <div class="stat-grid" style="margin-top: 40px;">
+    <div class="stat-cell">
+      <span class="stat-num-lg">6</span>
+      <div class="stat-desc">Cities lived across — SF, Taipei, Seoul, Buenos Aires, Berlin, Tokyo. Each one rewrote my "default user" assumptions.</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">2</span>
+      <div class="stat-desc">Businesses founded around democratising access through design — Khwaish Shop and The Vintage Flair.</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">3</span>
+      <div class="stat-desc">Roles held simultaneously at graduation: Product Designer (Techo), PM (Futre), Frontend Lead (SwapCircle).</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num-lg">∞</span>
+      <div class="stat-desc">Garments I'd try on if I could see them on my own body first — which is why Doji matters to me personally.</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-title">"Try for the version of yourself<br>you're still trying to see."</div>
+  <p class="closing-sub">— Doji's manifesto. The sentence I keep returning to, because it's exactly how I feel about this role and this company.</p>
+  <a href="https://aimanafzalarain.vercel.app/" class="closing-link">Read more of my work →</a>
+</div>
+
+<footer>
+  <div class="footer-credit">Aiman Afzal Arain · Product Design + CS · Minerva University '27</div>
+  <a href="#" style="font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); text-decoration:none;" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Back to top ↑</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop || document.body.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    document.getElementById('progress').style.width = (scrolled / total * 100) + '%';
+  });
+</script>
+</body>
+</html>

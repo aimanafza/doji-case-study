@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doji — Social Try-On Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0e0a;
+  --paper: #ffffff;
+  --cream: #f5f0e8;
+  --warm: #ede8dc;
+  --muted: #7a7268;
+  --soft: #b0a898;
+  --accent: #c8a96e;
+  --accent-deep: #9a7840;
+  --line: rgba(15,14,10,0.09);
+  --line-mid: rgba(15,14,10,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;letter-spacing:.18em;}
+.nav-tabs{display:flex;}
+.nav-tab{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;padding:0 18px;height:58px;display:flex;align-items:center;border:none;border-bottom:2px solid transparent;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.nav-tab:hover{color:var(--ink);}
+.nav-tab.active{color:var(--ink);border-bottom-color:var(--accent);}
+.nav-tab.highlight{color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.new-btn{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.new-btn:hover{background:var(--accent);color:var(--ink);}
+.av-bubble{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#3d2a14);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:13px;color:#fff;cursor:pointer;}
+
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;}
+
+/* HERO */
+.hero{height:100vh;padding-top:58px;display:grid;grid-template-columns:1fr 1fr;}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:0 56px 80px;}
+.hero-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(50px,6.5vw,82px);font-weight:300;line-height:.92;color:var(--ink);margin-bottom:26px;}
+.hero-title em{font-style:italic;color:var(--accent);}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.85;max-width:340px;margin-bottom:40px;}
+.hero-actions{display:flex;gap:12px;align-items:center;}
+.btn-primary{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:13px 30px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-primary:hover{background:var(--accent);color:var(--ink);}
+.btn-ghost{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:13px 24px;background:none;border:1px solid var(--line-mid);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+.hero-right{border-left:1px solid var(--line);background:var(--cream);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
+
+/* TICKER */
+.ticker-bar{padding:13px 0;background:var(--ink);overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;gap:52px;animation:ticker 22s linear infinite;}
+.ticker-item{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:18px;}
+.tdot{width:3px;height:3px;background:var(--accent);border-radius:50%;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* UNIVERSE */
+.universe-section{padding:72px 40px;}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;}
+.section-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:9px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;line-height:1.1;color:var(--ink);}
+.section-title em{font-style:italic;}
+.see-all-btn{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;border-bottom:1px solid var(--soft);padding-bottom:2px;font-family:'DM Sans',sans-serif;transition:color .2s;}
+.see-all-btn:hover{color:var(--ink);}
+.brand-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.brand-card{position:relative;cursor:pointer;overflow:hidden;aspect-ratio:3/4;border:1px solid var(--line);transition:transform .3s;}
+.brand-card:first-child{grid-row:span 2;aspect-ratio:auto;height:550px;}
+.brand-card:hover{transform:scale(1.008);}
+.bc-fig{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;}
+.bc-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,14,10,.72) 0%,transparent 55%);}
+.bc-info{position:absolute;bottom:0;left:0;right:0;padding:22px;}
+.bc-tag{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(230,210,170,.8);margin-bottom:5px;}
+.bc-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;color:#fff;margin-bottom:4px;}
+.bc-meta{font-size:11px;color:rgba(255,255,255,.45);}
+
+/* FEED */
+.feed-layout{display:grid;grid-template-columns:248px 1fr 232px;padding-top:58px;min-height:100vh;}
+.feed-left{padding:24px 18px;border-right:1px solid var(--line);position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto;}
+.feed-left::-webkit-scrollbar{display:none;}
+.sidebar-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:13px;display:block;}
+.profile-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 0 24px;border-bottom:1px solid var(--line);margin-bottom:24px;}
+.p-av{width:60px;height:60px;border-radius:50%;border:1.5px solid var(--accent);background:linear-gradient(135deg,var(--cream),var(--warm));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--accent-deep);margin-bottom:11px;}
+.p-name{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:3px;}
+.p-era{font-size:10px;color:var(--accent);letter-spacing:.06em;margin-bottom:13px;}
+.p-stats{display:flex;gap:18px;}
+.pstat{text-align:center;}
+.pstat-n{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);display:block;}
+.pstat-l{font-size:9px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase;}
+.uni-list{display:flex;flex-direction:column;gap:7px;margin-bottom:24px;}
+.uni-item{display:flex;align-items:center;gap:9px;padding:9px;cursor:pointer;border-radius:2px;border:1px solid transparent;transition:all .15s;}
+.uni-item:hover,.uni-item.active{background:var(--cream);border-color:var(--line);}
+.uni-swatch{width:30px;height:38px;border-radius:2px;flex-shrink:0;}
+.uni-name{font-size:12px;color:var(--ink);}
+.uni-count{font-size:9px;color:var(--soft);}
+.uni-live{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:2px 5px;border:1px solid rgba(200,169,110,.4);margin-left:auto;}
+
+/* FEED MAIN */
+.feed-main{padding:24px 28px;max-height:calc(100vh - 58px);overflow-y:auto;}
+.feed-main::-webkit-scrollbar{width:2px;}
+.feed-main::-webkit-scrollbar-thumb{background:var(--warm);}
+.feed-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:24px;}
+.feed-tab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:11px 18px;color:var(--soft);cursor:pointer;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.feed-tab:hover{color:var(--ink);}
+.feed-tab.active{color:var(--ink);border-bottom-color:var(--accent);}
+.post{background:var(--paper);padding:22px;border:1px solid var(--line);margin-bottom:2px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.post:nth-child(1){animation-delay:.04s}.post:nth-child(2){animation-delay:.08s}.post:nth-child(3){animation-delay:.12s}
+.post-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.post-user{display:flex;align-items:center;gap:9px;}
+.user-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;border:1px solid var(--line-mid);}
+.user-name{font-size:13px;color:var(--ink);}
+.user-era{font-size:10px;color:var(--accent);letter-spacing:.04em;}
+.post-badge{font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(200,169,110,.35);color:var(--accent);}
+.post-look{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:3px;height:280px;margin-bottom:16px;}
+.look-panel{position:relative;overflow:hidden;cursor:pointer;background:var(--cream);border:1px solid var(--line);}
+.look-panel:hover .try-overlay{opacity:1;}
+.try-overlay{position:absolute;inset:0;background:rgba(15,14,10,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.try-tag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;background:var(--accent);color:var(--ink);font-weight:500;}
+.look-label{position:absolute;bottom:7px;left:8px;right:8px;font-size:9px;color:var(--muted);letter-spacing:.04em;}
+.fit-badge{position:absolute;top:7px;right:7px;font-size:8px;letter-spacing:.06em;padding:3px 6px;background:rgba(255,255,255,.9);color:var(--ink);}
+.post-caption{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:13px;}
+.post-actions{display:flex;align-items:center;gap:14px;padding-top:13px;border-top:1px solid var(--line);}
+.action-btn{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--soft);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s;}
+.action-btn:hover,.action-btn.liked{color:var(--accent);}
+.post-spacer{flex:1;}
+.share-btn{font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--line-mid);color:var(--soft);background:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+.comments-area{margin-top:13px;padding-top:13px;border-top:1px solid var(--line);}
+.comment{display:flex;gap:7px;align-items:flex-start;margin-bottom:8px;}
+.c-av{width:20px;height:20px;border-radius:50%;background:var(--warm);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted);}
+.c-text{font-size:12px;color:var(--muted);line-height:1.5;}
+.c-text strong{color:var(--ink);font-weight:400;}
+.c-input-row{display:flex;gap:8px;align-items:center;margin-top:6px;}
+.c-input{flex:1;background:transparent;border:none;border-bottom:1px solid var(--line);padding:5px 0;font-size:12px;color:var(--ink);font-family:'DM Sans',sans-serif;outline:none;}
+.c-input::placeholder{color:var(--soft);}
+.c-input:focus{border-bottom-color:var(--accent);}
+.c-post-btn{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* FEED RIGHT */
+.feed-right{padding:24px 18px;border-left:1px solid var(--line);position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto;}
+.feed-right::-webkit-scrollbar{display:none;}
+.trending-item{display:flex;gap:9px;padding:8px;cursor:pointer;border-radius:2px;transition:background .15s;margin-bottom:10px;}
+.trending-item:hover{background:var(--cream);}
+.t-thumb{width:44px;height:58px;border-radius:2px;flex-shrink:0;background:var(--warm);}
+.t-name{font-size:12px;color:var(--ink);margin-bottom:3px;}
+.t-brand{font-size:10px;color:var(--accent);margin-bottom:2px;}
+.t-tries{font-size:10px;color:var(--soft);}
+.twin-card{padding:13px;background:rgba(200,169,110,.05);border:1px solid rgba(200,169,110,.2);margin-top:6px;}
+.twin-match{font-size:10px;color:var(--accent);margin-bottom:6px;}
+.twin-insight{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:10px;}
+
+/* DISCOVER */
+.discover-page{padding:100px 40px 80px;}
+.filter-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;}
+.pill{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.pill.active{background:var(--ink);color:var(--paper);border:1px solid var(--ink);}
+.pill:not(.active){border:1px solid var(--line-mid);color:var(--muted);background:none;}
+.pill:not(.active):hover{border-color:var(--ink);color:var(--ink);}
+.discover-grid{columns:4;column-gap:3px;}
+.d-item{break-inside:avoid;margin-bottom:3px;position:relative;cursor:pointer;overflow:hidden;border:1px solid var(--line);}
+.d-item:hover .d-overlay{opacity:1;}
+.d-fig{width:100%;background:var(--cream);display:flex;align-items:flex-end;justify-content:center;}
+.d-overlay{position:absolute;inset:0;background:rgba(15,14,10,.65);display:flex;flex-direction:column;justify-content:flex-end;padding:13px;opacity:0;transition:opacity .22s;}
+.d-user{font-size:12px;color:#fff;margin-bottom:2px;}
+.d-brand{font-size:10px;color:var(--accent);letter-spacing:.06em;}
+.d-try-btn{margin-top:7px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;background:var(--accent);color:var(--ink);font-weight:500;display:inline-block;}
+
+/* CHAPTER */
+.chapter-wrap{padding:100px 48px 80px;max-width:860px;margin:0 auto;}
+.chapter-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,36px);font-weight:300;font-style:italic;line-height:1.35;color:var(--ink);margin-bottom:12px;}
+.chapter-meta{font-size:11px;color:var(--soft);letter-spacing:.05em;margin-bottom:60px;}
+.eras{position:relative;}
+.era-line{position:absolute;left:104px;top:0;bottom:0;width:1px;background:var(--line-mid);}
+.era{display:grid;grid-template-columns:104px 1fr;gap:40px;margin-bottom:56px;position:relative;}
+.era-time{text-align:right;padding-top:3px;position:relative;}
+.era-date{font-size:10px;color:var(--muted);letter-spacing:.05em;display:block;margin-bottom:3px;}
+.era-dot{position:absolute;right:-6px;top:22px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--paper);}
+.era-label{font-size:9px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase;}
+.era-content{padding-left:26px;}
+.era-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--ink);margin-bottom:8px;}
+.era-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:16px;max-width:420px;}
+.era-looks{display:flex;gap:3px;}
+.era-look{width:68px;height:94px;border-radius:2px;cursor:pointer;position:relative;overflow:hidden;background:var(--cream);border:1px solid var(--line);transition:transform .2s;}
+.era-look:hover{transform:translateY(-4px);}
+.el-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,14,10,.55) 0%,transparent 60%);}
+.el-label{position:absolute;bottom:5px;left:5px;right:5px;font-size:8px;color:rgba(255,255,255,.8);letter-spacing:.04em;}
+.era-insight{margin-top:16px;padding:13px 16px;border-left:2px solid var(--accent);background:rgba(200,169,110,.05);}
+.insight-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+.insight-text{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--muted);line-height:1.6;}
+.share-card-section{margin-top:48px;padding:36px;background:var(--cream);border:1px solid var(--line);text-align:center;}
+.share-card-preview{width:240px;margin:0 auto 20px;background:var(--ink);padding:20px;text-align:center;}
+.scp-label{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px;}
+.scp-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--accent);margin-bottom:3px;}
+.scp-era{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px;}
+.scp-stats{display:flex;gap:20px;justify-content:center;}
+.scp-stat{text-align:center;}
+.scp-num{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--accent);display:block;}
+.scp-lbl{font-size:8px;color:rgba(255,255,255,.3);letter-spacing:.09em;text-transform:uppercase;}
+
+/* ONBOARDING */
+.ob-intro{background:var(--ink);padding:48px;text-align:center;}
+.ob-intro-eye{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.ob-intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,42px);font-weight:300;color:var(--paper);margin-bottom:10px;}
+.ob-intro-title em{font-style:italic;color:var(--accent);}
+.ob-intro-sub{font-size:13px;color:rgba(255,255,255,.38);max-width:460px;margin:0 auto;line-height:1.75;}
+.ob-step{min-height:100vh;padding:80px 60px;display:flex;align-items:center;gap:80px;border-bottom:1px solid var(--line);}
+.ob-step:nth-child(even){flex-direction:row-reverse;background:var(--cream);}
+.ob-info{flex:1;max-width:420px;}
+.ob-num{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:300;color:rgba(200,169,110,.25);line-height:1;margin-bottom:6px;}
+.ob-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+.ob-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,40px);font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:16px;}
+.ob-title em{font-style:italic;color:var(--accent);}
+.ob-desc{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:22px;}
+.ob-tags{display:flex;gap:7px;flex-wrap:wrap;}
+.ob-tag-pill{font-size:10px;letter-spacing:.08em;padding:5px 11px;border:1px solid var(--line-mid);color:var(--muted);}
+.ob-visual{flex:1;display:flex;justify-content:center;align-items:center;}
+
+/* UI widgets */
+.phone-frame{width:280px;border:1px solid var(--line-mid);background:var(--paper);overflow:hidden;}
+.phone-top{background:var(--ink);padding:14px 18px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.1em;text-align:center;color:var(--paper);}
+.viewfinder{background:var(--cream);height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+.vf-oval{width:110px;height:148px;border:2px dashed var(--accent);border-radius:60px;display:flex;align-items:center;justify-content:center;position:relative;}
+.vf-oval-text{font-size:9px;letter-spacing:.1em;text-align:center;color:var(--accent);line-height:1.7;}
+.vf-corners{position:absolute;inset:8px;}
+.vf-corners::before,.vf-corners::after{content:'';position:absolute;width:14px;height:14px;}
+.vf-corners::before{top:0;left:0;border-top:2px solid var(--ink);border-left:2px solid var(--ink);}
+.vf-corners::after{bottom:0;right:0;border-bottom:2px solid var(--ink);border-right:2px solid var(--ink);}
+.vf-badge{position:absolute;top:10px;right:10px;font-size:8px;letter-spacing:.07em;padding:3px 7px;background:rgba(200,169,110,.15);color:var(--accent);}
+.phone-progress{padding:13px 16px;border-top:1px solid var(--line);}
+.prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;}
+.prog-bar{height:2px;background:var(--warm);}
+.prog-fill{height:100%;width:40%;background:var(--accent);}
+.photo-slots{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:9px 12px;border-top:1px solid var(--line);}
+.slot{aspect-ratio:1;border-radius:2px;}
+.slot.done{background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--ink);}
+.slot.active{border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--accent);}
+.slot.empty{border:1px dashed rgba(15,14,10,.2);}
+
+/* Style quiz */
+.style-quiz{width:340px;}
+.sq-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink);margin-bottom:5px;}
+.sq-sub{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.sq-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.sq-card{aspect-ratio:4/5;border:2px solid var(--line);cursor:pointer;position:relative;overflow:hidden;background:var(--cream);display:flex;align-items:flex-end;padding:10px;transition:border-color .2s;}
+.sq-card.sel{border-color:var(--accent);}
+.sq-card-label{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--ink);position:relative;z-index:1;}
+.sq-check{position:absolute;top:7px;right:7px;width:16px;height:16px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center;font-size:9px;color:var(--ink);}
+.sq-card.sel .sq-check{display:flex;}
+.sq-btn{margin-top:12px;width:100%;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:12px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.sq-btn:hover{background:var(--accent);color:var(--ink);}
+
+/* Wait screen */
+.wait-frame{width:320px;border:1px solid var(--line);overflow:hidden;}
+.wf-top{background:var(--ink);padding:18px 22px;text-align:center;}
+.wf-title{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--paper);margin-bottom:4px;}
+.wf-sub{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;}
+.wf-prog{padding:16px 20px;border-bottom:1px solid var(--line);}
+.wf-prog-bar{height:2px;background:var(--warm);margin-bottom:5px;}
+.wf-prog-fill{height:100%;background:var(--accent);animation:pulse 2.5s ease-in-out infinite alternate;}
+@keyframes pulse{0%{width:52%}100%{width:78%}}
+.wf-prog-row{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);}
+.wf-tabs{display:flex;border-bottom:1px solid var(--line);}
+.wf-tab{flex:1;padding:9px 4px;font-size:9px;letter-spacing:.09em;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--soft);border:none;border-bottom:2px solid transparent;background:none;font-family:'DM Sans',sans-serif;}
+.wf-tab.active{color:var(--ink);border-bottom-color:var(--accent);}
+.wf-content{padding:14px 18px;}
+.wf-tip{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--muted);line-height:1.65;padding-bottom:11px;margin-bottom:11px;border-bottom:1px solid var(--line);}
+.wf-tip:last-child{border:none;margin:0;padding:0;}
+.wf-while-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:10px;}
+
+/* Reveal */
+.reveal-frame{width:280px;}
+.reveal-card{border:1px solid var(--line);margin-bottom:16px;overflow:hidden;}
+.reveal-head{background:var(--ink);padding:12px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.6);}
+.reveal-fig{background:var(--cream);padding:16px;display:flex;justify-content:center;}
+.reveal-hint{background:rgba(200,169,110,.06);border-top:1px solid var(--line);padding:12px 16px;font-size:11px;color:var(--muted);text-align:center;}
+.reveal-cta{width:100%;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:14px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background .2s;}
+.reveal-cta:hover{background:var(--accent-deep);color:var(--paper);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--ink);color:var(--paper);padding:11px 20px;font-size:12px;letter-spacing:.04em;transform:translateY(50px);opacity:0;transition:all .26s ease;pointer-events:none;font-family:'DM Sans',sans-serif;}
+.toast.show{transform:translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="doji-casestudy-v2.html" style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s;flex-shrink:0;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">← Case Study</a>
+  <div class="nav-logo">DOJI</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home',this)">Home</button>
+    <button class="nav-tab" onclick="showPage('feed',this)">Social Feed</button>
+    <button class="nav-tab" onclick="showPage('discover',this)">Discover</button>
+    <button class="nav-tab" onclick="showPage('chapter',this)">My Chapter</button>
+    <button class="nav-tab highlight" onclick="showPage('onboarding',this)">↳ Get Started</button>
+  </div>
+  <div class="nav-right">
+    <button class="new-btn" onclick="showToast('Opening Try-On Studio...')">+ New Look</button>
+    <div class="av-bubble">A</div>
+  </div>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Social Try-On — Concept Prototype</div>
+      <h1 class="hero-title">See yourself<br>in the world<br>you <em>love.</em></h1>
+      <p class="hero-sub">Try looks from designers that define your style. Share your avatar with a community that actually looks like you. Watch your style story unfold.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('onboarding',document.querySelectorAll('.nav-tab')[4])">Create Your Avatar</button>
+        <button class="btn-ghost" onclick="showPage('feed',document.querySelectorAll('.nav-tab')[1])">Explore the Feed →</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Hero figure: camel coat editorial -->
+      <svg width="100%" height="100%" viewBox="0 0 360 680" preserveAspectRatio="xMidYMax meet">
+        <ellipse cx="180" cy="674" rx="72" ry="9" fill="rgba(15,14,10,.06)"/>
+        <!-- Hair — dark, low bun -->
+        <ellipse cx="180" cy="64" rx="28" ry="30" fill="#1a1208"/>
+        <circle cx="180" cy="38" r="16" fill="#1a1208"/>
+        <!-- Face -->
+        <ellipse cx="180" cy="72" rx="22" ry="24" fill="#c49565"/>
+        <!-- Ears -->
+        <ellipse cx="158" cy="80" rx="4" ry="6" fill="#b8855a"/>
+        <ellipse cx="202" cy="80" rx="4" ry="6" fill="#b8855a"/>
+        <!-- Neck -->
+        <path d="M170 96 L190 96 L192 116 L168 116Z" fill="#c49565"/>
+        <!-- CAMEL COAT — oversized, structured -->
+        <path d="M96 120 L84 435 L276 435 L264 120 Q238 106 180 106 Q122 106 96 120Z" fill="#c8a96e"/>
+        <path d="M96 120 L82 345 L112 345 L122 133Z" fill="rgba(255,255,255,.07)"/>
+        <!-- Shoulders -->
+        <path d="M96 120 L70 128 L72 158 L96 150Z" fill="#b89055"/>
+        <path d="M264 120 L290 128 L288 158 L264 150Z" fill="#b89055"/>
+        <!-- Arms -->
+        <path d="M96 128 L66 308 L90 314 L110 145Z" fill="#c0984a"/>
+        <path d="M264 128 L294 308 L270 314 L250 145Z" fill="#c0984a"/>
+        <!-- Hands -->
+        <ellipse cx="76" cy="318" rx="13" ry="10" fill="#c49565"/>
+        <ellipse cx="284" cy="318" rx="13" ry="10" fill="#c49565"/>
+        <!-- Lapels -->
+        <path d="M180 116 L156 162 L144 116 L158 112Z" fill="#d4b478"/>
+        <path d="M180 116 L204 162 L216 116 L202 112Z" fill="#d4b478"/>
+        <!-- Buttons -->
+        <circle cx="180" cy="228" r="4" fill="rgba(160,120,40,.6)"/>
+        <circle cx="180" cy="278" r="4" fill="rgba(160,120,40,.6)"/>
+        <circle cx="180" cy="328" r="4" fill="rgba(160,120,40,.6)"/>
+        <!-- Belt -->
+        <rect x="84" y="300" width="192" height="7" fill="rgba(160,120,40,.5)" rx="2"/>
+        <!-- BLACK WIDE-LEG TROUSERS -->
+        <path d="M126 433 L96 648 L150 648 L172 538 L172 433Z" fill="#1a1410"/>
+        <path d="M234 433 L264 648 L210 648 L188 538 L188 433Z" fill="#1a1410"/>
+        <!-- Crease highlights -->
+        <line x1="124" y1="440" x2="112" y2="618" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+        <line x1="236" y1="440" x2="248" y2="618" stroke="rgba(255,255,255,.05)" stroke-width="2"/>
+        <!-- Shoes -->
+        <path d="M96 646 Q86 660 116 664 L150 658 L150 646Z" fill="#111008"/>
+        <path d="M264 646 Q274 660 244 664 L210 658 L210 646Z" fill="#111008"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-inner">
+      <span class="ticker-item">Peter Do <span class="tdot"></span></span>
+      <span class="ticker-item">Acne Studios <span class="tdot"></span></span>
+      <span class="ticker-item">The Row <span class="tdot"></span></span>
+      <span class="ticker-item">Toteme <span class="tdot"></span></span>
+      <span class="ticker-item">Khaite <span class="tdot"></span></span>
+      <span class="ticker-item">Lemaire <span class="tdot"></span></span>
+      <span class="ticker-item">Bottega Veneta <span class="tdot"></span></span>
+      <span class="ticker-item">Maison Margiela <span class="tdot"></span></span>
+      <span class="ticker-item">Rick Owens <span class="tdot"></span></span>
+      <span class="ticker-item">Peter Do <span class="tdot"></span></span>
+      <span class="ticker-item">Acne Studios <span class="tdot"></span></span>
+      <span class="ticker-item">The Row <span class="tdot"></span></span>
+      <span class="ticker-item">Toteme <span class="tdot"></span></span>
+      <span class="ticker-item">Khaite <span class="tdot"></span></span>
+      <span class="ticker-item">Lemaire <span class="tdot"></span></span>
+      <span class="ticker-item">Bottega Veneta <span class="tdot"></span></span>
+      <span class="ticker-item">Maison Margiela <span class="tdot"></span></span>
+      <span class="ticker-item">Rick Owens <span class="tdot"></span></span>
+    </div>
+  </div>
+
+  <!-- Brand Universes -->
+  <div class="universe-section">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">Live Brand Universes</div>
+        <div class="section-title">Try into the worlds<br>of <em>your</em> favourite designers</div>
+      </div>
+      <button class="see-all-btn" onclick="showPage('discover',document.querySelectorAll('.nav-tab')[2])">See all →</button>
+    </div>
+    <div class="brand-cards">
+      <!-- Peter Do — large -->
+      <div class="brand-card" style="background:#10100e;" onclick="showToast('Opening Peter Do Universe...')">
+        <div class="bc-fig">
+          <svg width="100%" height="100%" viewBox="0 0 280 560" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="140" cy="554" rx="56" ry="7" fill="rgba(0,0,0,.3)"/>
+            <ellipse cx="140" cy="54" rx="20" ry="22" fill="#0d0a08"/>
+            <ellipse cx="140" cy="60" rx="16" ry="18" fill="#8b5e3c"/>
+            <rect x="133" y="78" width="14" height="12" fill="#8b5e3c"/>
+            <!-- Black structured blazer -->
+            <path d="M80 92 L70 92 L64 232 L216 232 L210 92 L200 92 Q176 82 140 82 Q104 82 80 92Z" fill="#181410"/>
+            <path d="M80 96 L52 102 L54 145 L80 138Z" fill="#222018"/>
+            <path d="M200 96 L228 102 L226 145 L200 138Z" fill="#222018"/>
+            <!-- Lapels — white inside -->
+            <path d="M140 88 L118 130 L108 88" fill="#f5f0e8"/>
+            <path d="M140 88 L162 130 L172 88" fill="#f5f0e8"/>
+            <!-- Arms -->
+            <path d="M80 100 L58 278 L80 284 L100 114Z" fill="#181410"/>
+            <path d="M200 100 L222 278 L200 284 L180 114Z" fill="#181410"/>
+            <!-- Hands -->
+            <ellipse cx="66" cy="288" rx="15" ry="11" fill="#8b5e3c"/>
+            <ellipse cx="214" cy="288" rx="15" ry="11" fill="#8b5e3c"/>
+            <!-- Ivory pleated skirt -->
+            <path d="M80 230 L54 490 L226 490 L200 230Z" fill="#ede8dc"/>
+            <!-- Pleats -->
+            <line x1="98" y1="232" x2="80" y2="483" stroke="rgba(17,16,8,.09)" stroke-width="1.5"/>
+            <line x1="118" y1="232" x2="104" y2="483" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            <line x1="140" y1="232" x2="140" y2="483" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            <line x1="162" y1="232" x2="176" y2="483" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            <line x1="182" y1="232" x2="200" y2="483" stroke="rgba(17,16,8,.09)" stroke-width="1.5"/>
+            <!-- Shoes -->
+            <path d="M78 487 Q66 500 96 504 L116 498 L116 487Z" fill="#111008"/>
+            <path d="M202 487 Q214 500 184 504 L164 498 L164 487Z" fill="#111008"/>
+          </svg>
+        </div>
+        <div class="bc-overlay"></div>
+        <div class="bc-info">
+          <div class="bc-tag">Exclusive Drop · Live Now</div>
+          <div class="bc-name">Peter Do</div>
+          <div class="bc-meta">PD-168 · 2,841 tries this week</div>
+        </div>
+      </div>
+      <!-- Khaite -->
+      <div class="brand-card" style="background:#f0ebe0;height:272px;" onclick="showToast('Opening Khaite Universe...')">
+        <div class="bc-fig">
+          <svg width="100%" height="100%" viewBox="0 0 220 268" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="110" cy="264" rx="46" ry="6" fill="rgba(17,16,8,.06)"/>
+            <ellipse cx="110" cy="30" rx="18" ry="20" fill="#2a1f14"/>
+            <path d="M92 34 Q88 65 90 110" fill="none" stroke="#2a1f14" stroke-width="12" stroke-linecap="round"/>
+            <ellipse cx="110" cy="38" rx="14" ry="16" fill="#c49565"/>
+            <rect x="105" y="54" width="10" height="9" fill="#c49565"/>
+            <!-- Body-con dress -->
+            <path d="M90 62 Q110 57 130 62 L134 230 Q110 238 86 230Z" fill="#1a1410"/>
+            <!-- Straps -->
+            <rect x="98" y="62" width="6" height="12" fill="#111008"/>
+            <rect x="116" y="62" width="6" height="12" fill="#111008"/>
+            <!-- V-neck -->
+            <path d="M110 64 L100 84 L110 80 L120 84Z" fill="#c49565"/>
+            <!-- Dress highlight -->
+            <path d="M90 65 Q88 140 88 230" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="6"/>
+            <!-- Heels peeking -->
+            <path d="M86 228 Q76 240 100 244 L108 238 L108 228Z" fill="#2a1a0a"/>
+            <path d="M134 228 Q144 240 120 244 L112 238 L112 228Z" fill="#2a1a0a"/>
+          </svg>
+        </div>
+        <div class="bc-overlay"></div>
+        <div class="bc-info">
+          <div class="bc-tag">New Season</div>
+          <div class="bc-name">Khaite</div>
+          <div class="bc-meta">SS26 · 1,204 tries</div>
+        </div>
+      </div>
+      <!-- The Row -->
+      <div class="brand-card" style="background:#e8e4dc;height:272px;" onclick="showToast('Opening The Row Universe...')">
+        <div class="bc-fig">
+          <svg width="100%" height="100%" viewBox="0 0 220 268" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="110" cy="264" rx="48" ry="6" fill="rgba(17,16,8,.05)"/>
+            <ellipse cx="110" cy="28" rx="17" ry="19" fill="#5c3d1e"/>
+            <ellipse cx="127" cy="20" rx="10" ry="10" fill="#5c3d1e"/>
+            <ellipse cx="110" cy="36" rx="13" ry="15" fill="#d4a070"/>
+            <rect x="105" y="51" width="10" height="9" fill="#d4a070"/>
+            <!-- Turtleneck -->
+            <path d="M98 55 Q110 51 122 55 L126 68 Q110 71 94 68Z" fill="#1a1410"/>
+            <!-- Torso -->
+            <path d="M90 67 Q110 62 130 67 L134 152 Q110 158 86 152Z" fill="#1a1410"/>
+            <!-- CREAM WIDE-LEG TROUSERS -->
+            <path d="M90 150 L52 256 L108 256 L110 175 L112 256 L168 256 L130 150Z" fill="#ede8dc"/>
+            <line x1="88" y1="152" x2="68" y2="250" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            <line x1="132" y1="152" x2="152" y2="250" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            <!-- Flat shoes -->
+            <path d="M52 254 Q44 260 68 262 L82 258 L82 254Z" fill="#1a1410"/>
+            <path d="M168 254 Q176 260 152 262 L138 258 L138 254Z" fill="#1a1410"/>
+          </svg>
+        </div>
+        <div class="bc-overlay"></div>
+        <div class="bc-info">
+          <div class="bc-tag">Wardrobe Collection</div>
+          <div class="bc-name">The Row</div>
+          <div class="bc-meta">987 tries</div>
+        </div>
+      </div>
+      <!-- Toteme -->
+      <div class="brand-card" style="background:#f2ede5;height:272px;" onclick="showToast('Opening Toteme Universe...')">
+        <div class="bc-fig">
+          <svg width="100%" height="100%" viewBox="0 0 220 268" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="110" cy="263" rx="44" ry="5" fill="rgba(17,16,8,.05)"/>
+            <ellipse cx="110" cy="28" rx="16" ry="18" fill="#1e1408"/>
+            <ellipse cx="110" cy="36" rx="12" ry="14" fill="#e8c09a"/>
+            <rect x="105" y="50" width="10" height="8" fill="#e8c09a"/>
+            <!-- Wrap coat -->
+            <path d="M78 58 L70 235 L150 235 L142 58 Q126 51 110 51 Q94 51 78 58Z" fill="#d4c9b4"/>
+            <path d="M78 62 L58 212 L76 216 L92 72Z" fill="#c8bca8"/>
+            <path d="M142 62 L162 212 L144 216 L128 72Z" fill="#c8bca8"/>
+            <path d="M110 55 L92 82 L86 55" fill="#c8bca8"/>
+            <path d="M110 55 L128 82 L134 55" fill="#c8bca8"/>
+            <!-- Belt -->
+            <rect x="74" y="136" width="62" height="5" fill="#a89880" rx="2"/>
+            <rect x="104" y="134" width="12" height="9" fill="#7a6440" rx="1"/>
+            <!-- Slim pants -->
+            <rect x="88" y="233" width="16" height="28" fill="#1a1410"/>
+            <rect x="110" y="233" width="16" height="28" fill="#1a1410"/>
+            <path d="M86 259 Q80 265 96 267 L104 263 L104 259Z" fill="#1a1410"/>
+            <path d="M134 259 Q140 265 124 267 L116 263 L116 259Z" fill="#1a1410"/>
+          </svg>
+        </div>
+        <div class="bc-overlay"></div>
+        <div class="bc-info">
+          <div class="bc-tag">SS26</div>
+          <div class="bc-name">Toteme</div>
+          <div class="bc-meta">756 tries</div>
+        </div>
+      </div>
+      <!-- Lemaire -->
+      <div class="brand-card" style="background:#ebe6de;height:272px;" onclick="showToast('Opening Lemaire Universe...')">
+        <div class="bc-fig">
+          <svg width="100%" height="100%" viewBox="0 0 220 268" preserveAspectRatio="xMidYMax meet">
+            <ellipse cx="110" cy="263" rx="42" ry="5" fill="rgba(17,16,8,.05)"/>
+            <ellipse cx="110" cy="28" rx="15" ry="17" fill="#3d2a1a"/>
+            <path d="M95 32 Q93 62 96 104" fill="none" stroke="#3d2a1a" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="110" cy="36" rx="12" ry="14" fill="#c08855"/>
+            <rect x="105" y="50" width="10" height="8" fill="#c08855"/>
+            <!-- Lemaire trench -->
+            <path d="M76 58 L66 233 L154 233 L144 58 Q128 51 110 51 Q92 51 76 58Z" fill="#c8b48a"/>
+            <path d="M76 62 L56 218 L74 222 L90 72Z" fill="#bca87a"/>
+            <path d="M144 62 L164 218 L146 222 L130 72Z" fill="#bca87a"/>
+            <!-- Belt with buckle -->
+            <rect x="70" y="143" width="80" height="6" fill="#9a8460" rx="2"/>
+            <rect x="104" y="141" width="12" height="10" fill="#7a6440" rx="1"/>
+            <circle cx="110" cy="146" r="3" fill="none" stroke="#9a7850" stroke-width="1.5"/>
+            <!-- Dark trousers -->
+            <path d="M88 231 L80 262 L100 262 L110 248 L120 262 L140 262 L132 231Z" fill="#2a2014"/>
+            <path d="M80 260 Q72 266 90 268 L100 264 L100 260Z" fill="#1a1410"/>
+            <path d="M140 260 Q148 266 130 268 L120 264 L120 260Z" fill="#1a1410"/>
+          </svg>
+        </div>
+        <div class="bc-overlay"></div>
+        <div class="bc-info">
+          <div class="bc-tag">Ongoing Season</div>
+          <div class="bc-name">Lemaire</div>
+          <div class="bc-meta">621 tries</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FEED ═══ -->
+<div id="page-feed" class="page" style="padding-top:58px;">
+<div class="feed-layout">
+  <!-- Left -->
+  <div class="feed-left">
+    <div class="profile-card">
+      <div class="p-av">A</div>
+      <div class="p-name">Aiman</div>
+      <div class="p-era">Era: Quiet Minimalism</div>
+      <div class="p-stats">
+        <div class="pstat"><span class="pstat-n">47</span><span class="pstat-l">Looks</span></div>
+        <div class="pstat"><span class="pstat-n">312</span><span class="pstat-l">Followers</span></div>
+        <div class="pstat"><span class="pstat-n">8</span><span class="pstat-l">Chapters</span></div>
+      </div>
+    </div>
+    <span class="sidebar-label">Your Universes</span>
+    <div class="uni-list">
+      <div class="uni-item active">
+        <div class="uni-swatch" style="background:linear-gradient(135deg,#10100e,#2a1f14)"></div>
+        <div><div class="uni-name">Peter Do</div><div class="uni-count">PD-168 · 2.8k tries</div></div>
+        <div class="uni-live">Live</div>
+      </div>
+      <div class="uni-item">
+        <div class="uni-swatch" style="background:var(--warm)"></div>
+        <div><div class="uni-name">Khaite</div><div class="uni-count">SS26 · 1.2k tries</div></div>
+      </div>
+      <div class="uni-item">
+        <div class="uni-swatch" style="background:var(--cream)"></div>
+        <div><div class="uni-name">The Row</div><div class="uni-count">987 tries</div></div>
+      </div>
+      <div class="uni-item">
+        <div class="uni-swatch" style="background:linear-gradient(135deg,#c8b48a,#a89060)"></div>
+        <div><div class="uni-name">Lemaire</div><div class="uni-count">621 tries</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="feed-main">
+    <div class="feed-tabs">
+      <button class="feed-tab active" onclick="setFeedTab(this)">Following</button>
+      <button class="feed-tab" onclick="setFeedTab(this)">Trending</button>
+      <button class="feed-tab" onclick="setFeedTab(this)">Brand Drops</button>
+      <button class="feed-tab" onclick="setFeedTab(this)">Style Twins</button>
+    </div>
+
+    <!-- POST 1 -->
+    <div class="post">
+      <div class="post-header">
+        <div class="post-user">
+          <div class="user-av" style="background:var(--cream);">S</div>
+          <div><div class="user-name">Selin</div><div class="user-era">Era: Dark Romance</div></div>
+        </div>
+        <div class="post-badge">Peter Do · PD-168</div>
+      </div>
+      <div class="post-look">
+        <!-- Panel 1: hoodie -->
+        <div class="look-panel">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;">
+            <svg width="100%" height="100%" viewBox="0 0 120 280" preserveAspectRatio="xMidYMax meet">
+              <rect width="120" height="280" fill="#f5f0e8"/>
+              <ellipse cx="60" cy="22" rx="14" ry="16" fill="#1a1208"/>
+              <ellipse cx="60" cy="28" rx="10" ry="12" fill="#8b5e3c"/>
+              <rect x="56" y="40" width="8" height="7" fill="#8b5e3c"/>
+              <path d="M37 48 L28 48 L24 175 L96 175 L92 48 L83 48 Q73 42 60 42 Q47 42 37 48Z" fill="#181410"/>
+              <path d="M37 51 L22 56 L24 90 L37 86Z" fill="#222018"/>
+              <path d="M83 51 L98 56 L96 90 L83 86Z" fill="#222018"/>
+              <path d="M37 53 L20 195 L34 199 L44 63Z" fill="#181410"/>
+              <path d="M83 53 L100 195 L86 199 L76 63Z" fill="#181410"/>
+              <ellipse cx="26" cy="201" rx="10" ry="8" fill="#8b5e3c"/>
+              <ellipse cx="94" cy="201" rx="10" ry="8" fill="#8b5e3c"/>
+              <path d="M34 173 L16 272 L52 272 L60 226 L68 272 L104 272 L86 173Z" fill="#2a2418"/>
+            </svg>
+          </div>
+          <div class="look-label">Boxy Hoodie · $340</div>
+          <div class="fit-badge">87% fit</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+        <!-- Panel 2: full look -->
+        <div class="look-panel" style="border-color:rgba(200,169,110,.4);">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;background:var(--warm);">
+            <svg width="100%" height="100%" viewBox="0 0 140 280" preserveAspectRatio="xMidYMax meet">
+              <rect width="140" height="280" fill="#ede8dc"/>
+              <ellipse cx="70" cy="22" rx="16" ry="18" fill="#1a1208"/>
+              <ellipse cx="70" cy="28" rx="12" ry="14" fill="#8b5e3c"/>
+              <rect x="65" y="42" width="10" height="8" fill="#8b5e3c"/>
+              <path d="M40 52 L30 52 L26 185 L114 185 L110 52 L100 52 Q87 44 70 44 Q53 44 40 52Z" fill="#181410"/>
+              <path d="M40 56 L22 62 L24 104 L40 100Z" fill="#222018"/>
+              <path d="M100 56 L118 62 L116 104 L100 100Z" fill="#222018"/>
+              <path d="M70 48 L56 76 L50 48" fill="#f0ebe4"/>
+              <path d="M70 48 L84 76 L90 48" fill="#f0ebe4"/>
+              <path d="M40 58 L22 200 L36 204 L48 68Z" fill="#181410"/>
+              <path d="M100 58 L118 200 L104 204 L92 68Z" fill="#181410"/>
+              <path d="M44 183 L20 272 L64 272 L70 238 L76 272 L120 272 L96 183Z" fill="#ede8dc"/>
+              <line x1="42" y1="185" x2="28" y2="266" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+              <line x1="98" y1="185" x2="112" y2="266" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="look-label">Full Look</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+        <!-- Panel 3: boot detail -->
+        <div class="look-panel">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;">
+            <svg width="80" height="140" viewBox="0 0 80 140">
+              <rect x="16" y="10" width="48" height="90" rx="4" fill="#1a1410"/>
+              <path d="M10 98 Q6 120 24 130 L66 130 Q74 120 70 98Z" fill="#1a1410"/>
+              <rect x="6" y="128" width="68" height="10" rx="2" fill="#2a2018"/>
+              <line x1="22" y1="26" x2="58" y2="26" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <line x1="22" y1="40" x2="58" y2="40" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <line x1="22" y1="54" x2="58" y2="54" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <line x1="22" y1="68" x2="58" y2="68" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <rect x="52" y="13" width="2" height="84" fill="rgba(255,255,255,.06)"/>
+            </svg>
+          </div>
+          <div class="look-label">Combat Boot · $650</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+      </div>
+      <div class="post-caption">"found my entire uniform in PD-168. the hoodie fits like it was made to be lived in."</div>
+      <div class="post-actions">
+        <button class="action-btn" onclick="toggleLike(this)">♡ <span class="lc">84</span></button>
+        <button class="action-btn" onclick="toggleComments(this)">○ 12</button>
+        <button class="action-btn" onclick="showToast('Saved to wishlist')">□ Save</button>
+        <div class="post-spacer"></div>
+        <button class="share-btn" onclick="showToast('Link copied!')">Share Look</button>
+      </div>
+      <div class="comments-area" id="c1" style="display:none;">
+        <div class="comment"><div class="c-av">M</div><div class="c-text"><strong>maya.r</strong> trying this on my avatar rn omg</div></div>
+        <div class="comment"><div class="c-av">N</div><div class="c-text"><strong>nour_k</strong> same body type as you — this makes me want it so much more than the product shot</div></div>
+        <div class="c-input-row"><input class="c-input" placeholder="Add a comment..."><button class="c-post-btn" onclick="showToast('Comment posted')">Post</button></div>
+      </div>
+    </div>
+
+    <!-- POST 2: Almost Bought -->
+    <div class="post" style="background:rgba(200,169,110,.02);border-color:rgba(200,169,110,.18);">
+      <div class="post-header">
+        <div class="post-user">
+          <div class="user-av" style="background:var(--cream);">J</div>
+          <div><div class="user-name">Jasmine</div><div class="user-era">Era: New Minimalism</div></div>
+        </div>
+        <div class="post-badge" style="color:var(--accent);">What I Almost Bought</div>
+      </div>
+      <div class="post-look">
+        <div class="look-panel" style="background:#f5f0e8;">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;">
+            <svg width="100%" height="100%" viewBox="0 0 120 280" preserveAspectRatio="xMidYMax meet">
+              <rect width="120" height="280" fill="#f5f0e8"/>
+              <ellipse cx="60" cy="20" rx="12" ry="14" fill="#c8a96e"/>
+              <ellipse cx="60" cy="26" rx="9" ry="11" fill="#e8c09a"/>
+              <rect x="56" y="37" width="8" height="7" fill="#e8c09a"/>
+              <path d="M44 44 Q60 40 76 44 L80 272 Q60 278 40 272Z" fill="#d4cfc5"/>
+              <path d="M44 47 L36 45 L34 78 L44 75Z" fill="#d4cfc5"/>
+              <path d="M76 47 L84 45 L86 78 L76 75Z" fill="#d4cfc5"/>
+              <line x1="51" y1="44" x2="50" y2="50" stroke="#c0bbb5" stroke-width="1.5"/>
+              <line x1="69" y1="44" x2="70" y2="50" stroke="#c0bbb5" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="look-label">Slip Dress · $780</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+        <div class="look-panel" style="background:#f0ebe0;">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;">
+            <svg width="100%" height="100%" viewBox="0 0 140 280" preserveAspectRatio="xMidYMax meet">
+              <rect width="140" height="280" fill="#f0ebe0"/>
+              <ellipse cx="70" cy="20" rx="14" ry="16" fill="#c8a960"/>
+              <ellipse cx="70" cy="26" rx="10" ry="12" fill="#e8c09a"/>
+              <rect x="65" y="38" width="10" height="8" fill="#e8c09a"/>
+              <!-- Leather jacket -->
+              <path d="M44 46 L34 46 L30 160 L110 160 L106 46 L96 46 Q84 39 70 39 Q56 39 44 46Z" fill="#1a1410"/>
+              <path d="M44 50 L28 55 L30 90 L44 86Z" fill="#222018"/>
+              <path d="M96 50 L112 55 L110 90 L96 86Z" fill="#222018"/>
+              <path d="M70 44 L55 68 L50 44" fill="#2a2018"/>
+              <path d="M70 44 L85 68 L90 44" fill="#2a2018"/>
+              <path d="M44 54 L28 188 L40 192 L52 64Z" fill="#1a1410"/>
+              <path d="M96 54 L112 188 L100 192 L88 64Z" fill="#1a1410"/>
+              <!-- Slip below jacket -->
+              <path d="M36 158 L22 272 L118 272 L104 158Z" fill="#d4cfc5"/>
+            </svg>
+          </div>
+          <div class="look-label">Full Look</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+        <div class="look-panel">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:22px;">
+            <svg width="80" height="120" viewBox="0 0 80 120">
+              <rect x="10" y="28" width="60" height="84" rx="3" fill="#1a1410"/>
+              <rect x="13" y="31" width="54" height="78" rx="2" fill="#222018"/>
+              <path d="M24 28 Q24 10 40 10 Q56 10 56 28" fill="none" stroke="#1a1410" stroke-width="5" stroke-linecap="round"/>
+              <rect x="29" y="64" width="22" height="16" rx="1" fill="rgba(255,255,255,.05)"/>
+              <rect x="34" y="27" width="12" height="5" rx="1" fill="#8a7450"/>
+            </svg>
+          </div>
+          <div class="look-label">Mini Bag · $1,290</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+      </div>
+      <div class="post-caption">"didn't buy it. but i've thought about this look every day for a week. the slip under the jacket is everything."</div>
+      <div class="post-actions">
+        <button class="action-btn" onclick="toggleLike(this)">♡ <span class="lc">241</span></button>
+        <button class="action-btn" onclick="toggleComments(this)">○ 38</button>
+        <button class="action-btn" onclick="showToast('Saved')">□ Save</button>
+        <div class="post-spacer"></div>
+        <button class="share-btn" onclick="showToast('Shared!')">Share</button>
+      </div>
+      <div class="comments-area" id="c2" style="display:none;">
+        <div class="comment"><div class="c-av">L</div><div class="c-text"><strong>lena.w</strong> the "almost bought" format is my favourite thing on here. so honest.</div></div>
+        <div class="comment"><div class="c-av">A</div><div class="c-text"><strong>a.felix</strong> tried it on my avatar and now i definitely can't not buy it</div></div>
+        <div class="c-input-row"><input class="c-input" placeholder="Add a comment..."><button class="c-post-btn" onclick="showToast('Comment posted')">Post</button></div>
+      </div>
+    </div>
+
+    <!-- POST 3: Style Twin -->
+    <div class="post">
+      <div class="post-header">
+        <div class="post-user">
+          <div class="user-av" style="background:var(--warm);">R</div>
+          <div><div class="user-name">Rima + Zoë</div><div class="user-era" style="color:var(--accent);">✦ Style Twin Match</div></div>
+        </div>
+        <span style="font-size:10px;color:var(--soft);">92% aesthetic match</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;height:260px;margin-bottom:14px;">
+        <div class="look-panel">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;background:var(--cream);">
+            <svg width="100%" height="100%" viewBox="0 0 140 258" preserveAspectRatio="xMidYMax meet">
+              <rect width="140" height="258" fill="#f5f0e8"/>
+              <ellipse cx="70" cy="22" rx="16" ry="18" fill="#3d2a1a"/>
+              <path d="M54 26 Q52 56 56 98" fill="none" stroke="#3d2a1a" stroke-width="11" stroke-linecap="round"/>
+              <ellipse cx="70" cy="30" rx="12" ry="14" fill="#c49565"/>
+              <rect x="65" y="44" width="10" height="8" fill="#c49565"/>
+              <path d="M42 52 L34 52 L30 238 L110 238 L106 52 L98 52 Q86 44 70 44 Q54 44 42 52Z" fill="#f5f0e8" stroke="#e0dbd0" stroke-width="1"/>
+              <path d="M42 56 L26 62 L28 100 L42 96Z" fill="#ede8dc"/>
+              <path d="M98 56 L114 62 L112 100 L98 96Z" fill="#ede8dc"/>
+              <path d="M70 50 L56 76 L50 50" fill="#e0dbd0"/>
+              <path d="M70 50 L84 76 L90 50" fill="#e0dbd0"/>
+              <rect x="34" y="138" width="72" height="5" fill="#c8b898" rx="2"/>
+              <path d="M50 236 L42 252 L64 252 L70 244 L76 252 L98 252 L90 236Z" fill="#1a1410"/>
+            </svg>
+          </div>
+          <div class="look-label">Rima · The Row</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+        <div class="look-panel">
+          <div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;background:var(--warm);">
+            <svg width="100%" height="100%" viewBox="0 0 140 258" preserveAspectRatio="xMidYMax meet">
+              <rect width="140" height="258" fill="#ede8dc"/>
+              <ellipse cx="70" cy="22" rx="15" ry="17" fill="#5c3d1e"/>
+              <ellipse cx="86" cy="16" rx="10" ry="9" fill="#5c3d1e"/>
+              <ellipse cx="70" cy="30" rx="11" ry="13" fill="#d4a070"/>
+              <rect x="65" y="43" width="10" height="7" fill="#d4a070"/>
+              <path d="M44 51 L36 51 L32 236 L108 236 L104 51 L96 51 Q84 44 70 44 Q56 44 44 51Z" fill="#f0ebe0" stroke="#e8e0d0" stroke-width="1"/>
+              <path d="M44 55 L28 61 L30 99 L44 95Z" fill="#e8e0d0"/>
+              <path d="M96 55 L112 61 L110 99 L96 95Z" fill="#e8e0d0"/>
+              <path d="M70 49 L58 74 L52 49" fill="#ddd8cc"/>
+              <path d="M70 49 L82 74 L88 49" fill="#ddd8cc"/>
+              <rect x="36" y="133" width="68" height="5" fill="#c4b890" rx="2"/>
+              <path d="M50 234 L44 252 L66 252 L70 242 L74 252 L96 252 L90 234Z" fill="#2a2018"/>
+            </svg>
+          </div>
+          <div class="look-label">Zoë · Toteme</div>
+          <div class="try-overlay"><span class="try-tag">Try On</span></div>
+        </div>
+      </div>
+      <div style="padding:12px 14px;background:rgba(200,169,110,.05);border:1px solid rgba(200,169,110,.15);margin-bottom:13px;">
+        <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">✦ Doji Match Insight</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--muted);">Both drawn to structured neutral outerwear with dark trouser bottoms. Different brands, identical instinct.</div>
+      </div>
+      <div class="post-actions">
+        <button class="action-btn" onclick="toggleLike(this)">♡ <span class="lc">163</span></button>
+        <button class="action-btn" onclick="showToast('Now following Zoë')">Follow Zoë</button>
+        <div class="post-spacer"></div>
+        <button class="share-btn" onclick="showToast('Shared!')">Share</button>
+      </div>
+    </div>
+  </div><!-- /feed-main -->
+
+  <!-- Right -->
+  <div class="feed-right">
+    <span class="sidebar-label">Trending This Week</span>
+    <div class="trending-item" onclick="showToast('Opening look...')">
+      <div class="t-thumb" style="background:var(--warm);display:flex;align-items:flex-end;justify-content:center;"><svg width="44" height="58" viewBox="0 0 44 58"><ellipse cx="22" cy="10" rx="9" ry="10" fill="#8b5e3c"/><rect x="12" y="20" width="20" height="30" fill="#181410"/><rect x="12" y="50" width="7" height="7" fill="#181410"/><rect x="25" y="50" width="7" height="7" fill="#181410"/></svg></div>
+      <div><div class="t-name">PD-168 Full Look</div><div class="t-brand">Peter Do</div><div class="t-tries">2,841 tries</div></div>
+    </div>
+    <div class="trending-item" onclick="showToast('Opening look...')">
+      <div class="t-thumb" style="background:var(--cream);display:flex;align-items:flex-end;justify-content:center;"><svg width="44" height="58" viewBox="0 0 44 58"><ellipse cx="22" cy="9" rx="8" ry="9" fill="#d4a070"/><path d="M11 18 Q22 14 33 18 L35 54 Q22 58 9 54Z" fill="#ede8dc"/></svg></div>
+      <div><div class="t-name">Wrap Coat Look</div><div class="t-brand">Toteme</div><div class="t-tries">756 tries</div></div>
+    </div>
+    <div class="trending-item" onclick="showToast('Opening look...')">
+      <div class="t-thumb" style="background:var(--warm);display:flex;align-items:flex-end;justify-content:center;"><svg width="44" height="58" viewBox="0 0 44 58"><ellipse cx="22" cy="9" rx="8" ry="9" fill="#c49565"/><rect x="14" y="18" width="16" height="24" fill="#181410"/><path d="M12 42 L5 56 L18 56 L22 48 L26 56 L39 56 L32 42Z" fill="#ede8dc"/></svg></div>
+      <div><div class="t-name">Blazer + Pleated Skirt</div><div class="t-brand">Khaite</div><div class="t-tries">1,204 tries</div></div>
+    </div>
+    <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line);">
+      <span class="sidebar-label">Your Style Twin</span>
+      <div class="twin-card">
+        <div style="font-size:11px;color:var(--ink);margin-bottom:3px;">Nour · Cairo</div>
+        <div class="twin-match">89% aesthetic match</div>
+        <div class="twin-insight">Both drawn to minimal, structured silhouettes in neutral palettes. You've tried on 14 of the same pieces.</div>
+        <button style="width:100%;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:8px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;" onmouseover="this.style.background='var(--accent)';this.style.color='var(--ink)'" onmouseout="this.style.background='var(--ink)';this.style.color='var(--paper)'" onclick="showToast('Now following Nour')">Follow</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ DISCOVER ═══ -->
+<div id="page-discover" class="page">
+<div class="discover-page">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div>
+      <div class="section-eyebrow">Explore</div>
+      <div class="section-title">What everyone's <em>trying on</em> right now</div>
+    </div>
+  </div>
+  <div class="filter-pills">
+    <button class="pill active">All</button>
+    <button class="pill" onclick="showToast('Filtering by Peter Do')">Peter Do</button>
+    <button class="pill" onclick="showToast('Filtering by Almost Bought')">Almost Bought</button>
+    <button class="pill" onclick="showToast('Filtering by Style Twins')">Style Twins</button>
+    <button class="pill" onclick="showToast('Filtering by The Row')">The Row</button>
+  </div>
+  <div class="discover-grid">
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:320px;background:#f5f0e8;"><svg width="100%" height="320" viewBox="0 0 150 320" preserveAspectRatio="xMidYMax meet"><rect width="150" height="320" fill="#f5f0e8"/><ellipse cx="75" cy="38" rx="18" ry="20" fill="#1a1208"/><ellipse cx="75" cy="44" rx="14" ry="16" fill="#8b5e3c"/><rect x="69" y="60" width="12" height="9" fill="#8b5e3c"/><path d="M46 70 L36 70 L30 282 L120 282 L114 70 L104 70 Q90 62 75 62 Q60 62 46 70Z" fill="#181410"/><path d="M46 74 L26 80 L28 126 L46 120Z" fill="#222018"/><path d="M104 74 L124 80 L122 126 L104 120Z" fill="#222018"/><path d="M75 66 L56 100 L48 66" fill="#f0ebe4"/><path d="M75 66 L94 100 L102 66" fill="#f0ebe4"/><path d="M46 76 L26 250 L42 254 L56 88Z" fill="#181410"/><path d="M104 76 L124 250 L108 254 L94 88Z" fill="#181410"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@selin.wears</div><div class="d-brand">Peter Do · PD-168</div><span class="d-try-btn">Try On</span></div>
+    </div>
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:228px;background:#ede8dc;"><svg width="100%" height="228" viewBox="0 0 150 228" preserveAspectRatio="xMidYMax meet"><rect width="150" height="228" fill="#ede8dc"/><ellipse cx="75" cy="28" rx="15" ry="17" fill="#5c3d1e"/><ellipse cx="75" cy="35" rx="11" ry="13" fill="#d4a070"/><rect x="70" y="48" width="10" height="7" fill="#d4a070"/><path d="M50 56 L42 56 L37 218 L113 218 L108 56 L100 56 Q88 50 75 50 Q62 50 50 56Z" fill="#c8bca8"/><path d="M50 59 L33 64 L35 98 L50 94Z" fill="#bca898"/><path d="M100 59 L117 64 L115 98 L100 94Z" fill="#bca898"/><rect x="40" y="124" width="70" height="5" fill="#9a8870" rx="2"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@meilin</div><div class="d-brand">Lemaire · FW25</div><span class="d-try-btn">Try On</span></div>
+    </div>
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:380px;background:#f0ebe0;"><svg width="100%" height="380" viewBox="0 0 150 380" preserveAspectRatio="xMidYMax meet"><rect width="150" height="380" fill="#f0ebe0"/><ellipse cx="75" cy="36" rx="17" ry="19" fill="#1a1208"/><path d="M58 40 Q56 76 59 128" fill="none" stroke="#1a1208" stroke-width="11" stroke-linecap="round"/><ellipse cx="75" cy="44" rx="13" ry="15" fill="#8b5e3c"/><rect x="70" y="59" width="10" height="8" fill="#8b5e3c"/><path d="M50 68 Q75 63 100 68 L104 185 Q75 193 46 185Z" fill="#1a1410"/><path d="M75 64 L60 96 L53 64" fill="#f5f0e8"/><path d="M75 64 L90 96 L97 64" fill="#f5f0e8"/><path d="M48 183 L22 372 L72 372 L75 295 L78 372 L128 372 L102 183Z" fill="#ede8dc"/><line x1="46" y1="185" x2="31" y2="366" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/><line x1="104" y1="185" x2="119" y2="366" stroke="rgba(17,16,8,.07)" stroke-width="1.5"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@jasmine</div><div class="d-brand">The Row · SS26</div><span class="d-try-btn">Try On</span></div>
+    </div>
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:285px;background:#f5f0e8;"><svg width="100%" height="285" viewBox="0 0 150 285" preserveAspectRatio="xMidYMax meet"><rect width="150" height="285" fill="#f5f0e8"/><ellipse cx="75" cy="28" rx="14" ry="16" fill="#c8a060"/><ellipse cx="75" cy="35" rx="10" ry="12" fill="#e8c09a"/><rect x="70" y="47" width="10" height="7" fill="#e8c09a"/><path d="M50 55 L42 55 L36 270 L114 270 L108 55 L100 55 Q88 48 75 48 Q62 48 50 55Z" fill="#d4cfc5"/><path d="M50 58 L30 64 L32 102 L50 98Z" fill="#c8c2b8"/><path d="M100 58 L120 64 L118 102 L100 98Z" fill="#c8c2b8"/><path d="M75 52 L59 80 L52 52" fill="#ebe6dc"/><path d="M75 52 L91 80 L98 52" fill="#ebe6dc"/><rect x="38" y="138" width="74" height="5" fill="#a09888" rx="2"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@nour.k</div><div class="d-brand">Toteme · SS26</div><span class="d-try-btn">Try On</span></div>
+    </div>
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:266px;background:#1a1410;"><svg width="100%" height="266" viewBox="0 0 150 266" preserveAspectRatio="xMidYMax meet"><rect width="150" height="266" fill="#1a1410"/><ellipse cx="75" cy="26" rx="14" ry="16" fill="#2a1f14"/><ellipse cx="75" cy="32" rx="10" ry="12" fill="#8b5e3c"/><rect x="70" y="44" width="10" height="7" fill="#8b5e3c"/><path d="M48 52 L38 52 L34 200 L116 200 L112 52 L102 52 Q90 44 75 44 Q60 44 48 52Z" fill="#181410"/><path d="M48 56 L28 62 L30 106 L48 102Z" fill="#222018"/><path d="M102 56 L122 62 L120 106 L102 102Z" fill="#222018"/><path d="M75 50 L58 82 L50 50" fill="#f0ebe4"/><path d="M75 50 L92 82 L100 50" fill="#f0ebe4"/><path d="M44 198 L28 258 L68 258 L75 234 L82 258 L122 258 L106 198Z" fill="#ede8dc"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@rima</div><div class="d-brand">Peter Do · PD-168</div><span class="d-try-btn">Try On</span></div>
+    </div>
+    <div class="d-item" onclick="showToast('Opening look...')">
+      <div class="d-fig" style="height:340px;background:#ebe6de;"><svg width="100%" height="340" viewBox="0 0 150 340" preserveAspectRatio="xMidYMax meet"><rect width="150" height="340" fill="#ebe6de"/><ellipse cx="75" cy="32" rx="15" ry="17" fill="#3d2a1a"/><ellipse cx="92" cy="24" rx="10" ry="10" fill="#3d2a1a"/><ellipse cx="75" cy="40" rx="11" ry="13" fill="#c08855"/><rect x="70" y="53" width="10" height="7" fill="#c08855"/><path d="M50 61 L40 61 L34 328 L116 328 L110 61 L100 61 Q88 54 75 54 Q62 54 50 61Z" fill="#c8b48a"/><path d="M50 65 L30 71 L32 118 L50 114Z" fill="#bca87a"/><path d="M100 65 L120 71 L118 118 L100 114Z" fill="#bca87a"/><rect x="38" y="168" width="74" height="6" fill="#9a8460" rx="2"/><rect x="68" y="165" width="14" height="11" fill="#7a6440" rx="1"/><circle cx="75" cy="170" r="3.5" fill="none" stroke="#9a7850" stroke-width="1.5"/></svg></div>
+      <div class="d-overlay"><div class="d-user">@anya.s</div><div class="d-brand">Lemaire · FW25</div><span class="d-try-btn">Try On</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ CHAPTER ═══ -->
+<div id="page-chapter" class="page">
+<div class="chapter-wrap">
+  <div class="section-eyebrow" style="margin-bottom:14px;">My Style Chapter</div>
+  <div class="chapter-quote">"You're in a period of intentional refinement — building a wardrobe that asks less of you and gives more back."</div>
+  <div class="chapter-meta">— Doji Style Intelligence · Updated February 2026</div>
+  <div class="eras">
+    <div class="era-line"></div>
+    <!-- Era 1 -->
+    <div class="era">
+      <div class="era-time"><span class="era-date">Feb 2026</span><div class="era-dot"></div><span class="era-label">Now</span></div>
+      <div class="era-content">
+        <div class="era-title">Quiet Minimalism</div>
+        <div class="era-desc">Monochromatic palettes, architectural silhouettes. Pieces that feel considered and permanent — nothing that trends out. The Row, Toteme, Peter Do.</div>
+        <div class="era-looks">
+          <div class="era-look" style="background:var(--warm);"><div style="width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;"><svg width="68" height="94" viewBox="0 0 68 94"><ellipse cx="34" cy="10" rx="9" ry="10" fill="#181410"/><ellipse cx="34" cy="13" rx="7" ry="8" fill="#8b5e3c"/><path d="M20 22 L14 22 L11 84 L57 84 L54 22 L48 22 Q42 17 34 17 Q26 17 20 22Z" fill="#181410"/><path d="M20 24 L10 27 L11 46 L20 44Z" fill="#222018"/><path d="M48 24 L58 27 L57 46 L48 44Z" fill="#222018"/></svg></div><div class="el-grad"></div><div class="el-label">Peter Do</div></div>
+          <div class="era-look" style="background:#f0ebe0;"><div class="el-grad"></div><div class="el-label">The Row</div></div>
+          <div class="era-look" style="background:var(--cream);"><div class="el-grad"></div><div class="el-label">Toteme</div></div>
+          <div class="era-look" style="background:var(--warm);"><div class="el-grad"></div><div class="el-label">Lemaire</div></div>
+        </div>
+        <div class="era-insight"><div class="insight-label">✦ Doji Insight</div><div class="insight-text">"84% of your saves this month are in black, ivory, or deep navy. You're building a uniform, not a wardrobe."</div></div>
+      </div>
+    </div>
+    <!-- Era 2 -->
+    <div class="era">
+      <div class="era-time"><span class="era-date">Oct 2025</span><div class="era-dot" style="background:var(--soft);"></div></div>
+      <div class="era-content">
+        <div class="era-title">Dark Romance</div>
+        <div class="era-desc">Deep jewel tones, draped fabrics, high contrast. Fashion as mood and theatre. Khaite, Y/Project, Nensi Dojaka.</div>
+        <div class="era-looks">
+          <div class="era-look" style="background:var(--warm);"><div class="el-grad"></div><div class="el-label">Khaite</div></div>
+          <div class="era-look" style="background:var(--cream);"><div class="el-grad"></div><div class="el-label">Y/Project</div></div>
+          <div class="era-look" style="background:var(--warm);"><div class="el-grad"></div><div class="el-label">Bottega</div></div>
+        </div>
+        <div class="era-insight"><div class="insight-label">✦ Doji Insight</div><div class="insight-text">"You tried 47 looks this season but only purchased 3 — your saves show you were exploring, not shopping. That's a healthy relationship with fashion."</div></div>
+      </div>
+    </div>
+    <!-- Era 3 -->
+    <div class="era">
+      <div class="era-time"><span class="era-date">May 2025</span><div class="era-dot" style="background:var(--line-mid);"></div></div>
+      <div class="era-content">
+        <div class="era-title">The Exploration Phase</div>
+        <div class="era-desc">Everything, all at once. Trying looks across every aesthetic — finding what felt like yours.</div>
+        <div class="era-looks">
+          <div class="era-look" style="background:var(--cream);"><div class="el-grad"></div><div class="el-label">Acne Studios</div></div>
+          <div class="era-look" style="background:var(--warm);"><div class="el-grad"></div><div class="el-label">Ganni</div></div>
+          <div class="era-look" style="background:var(--cream);"><div class="el-grad"></div><div class="el-label">Jacquemus</div></div>
+          <div class="era-look" style="background:var(--warm);"><div class="el-grad"></div><div class="el-label">Comme des G.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Share card -->
+  <div class="share-card-section">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-bottom:4px;">Share Your Chapter</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:20px;">Your style story, as a shareable card.</div>
+    <div class="share-card-preview">
+      <div class="scp-label">Doji · Style Chapter</div>
+      <svg width="50" height="80" viewBox="0 0 50 80" style="margin:8px 0;"><ellipse cx="25" cy="10" rx="9" ry="10" fill="#c49565"/><path d="M11 20 L7 20 L5 72 L45 72 L43 20 L39 20 Q33 16 25 16 Q17 16 11 20Z" fill="#181410"/><path d="M25 18 L16 32 L12 18" fill="rgba(245,240,232,.65)"/><path d="M25 18 L34 32 L38 18" fill="rgba(245,240,232,.65)"/></svg>
+      <div class="scp-name">Aiman</div>
+      <div class="scp-era">Quiet Minimalism · Feb 2026</div>
+      <div class="scp-stats">
+        <div class="scp-stat"><span class="scp-num">47</span><span class="scp-lbl">Looks</span></div>
+        <div class="scp-stat"><span class="scp-num">3</span><span class="scp-lbl">Eras</span></div>
+        <div class="scp-stat"><span class="scp-num">312</span><span class="scp-lbl">Followers</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn-primary" onclick="showToast('Chapter card shared!')">Share to Profile</button>
+      <button class="btn-ghost" onclick="showToast('Downloading...')">Save as Image</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ONBOARDING ═══ -->
+<div id="page-onboarding" class="page" style="padding-top:58px;">
+  <div class="ob-intro">
+    <div class="ob-intro-eye">Concept Design · Onboarding Reimagined</div>
+    <div class="ob-intro-title">How I'd make the <em>30-minute wait</em><br>feel like the beginning of something.</div>
+    <div class="ob-intro-sub">Doji's avatar takes ~30 min to generate. Right now that's a notification and a loading screen. Here's how to turn that wait into delight — and get users invested before their avatar even arrives.</div>
+  </div>
+
+  <!-- Step 1: Selfie guide -->
+  <div class="ob-step">
+    <div class="ob-info">
+      <div class="ob-num">01</div>
+      <div class="ob-tag">Capture</div>
+      <div class="ob-title">Six selfies. Two minutes.<br><em>Your entire likeness.</em></div>
+      <div class="ob-desc">Current pain: users don't know what makes a good avatar photo. Bad inputs = bad avatar = churn. The fix is a real-time selfie coach inside the app — like Snapchat's face scan but fashion-grade. Each photo slot only unlocks once lighting and angle quality are confirmed. Fewer bad photos, better avatars, better first impressions.</div>
+      <div class="ob-tags">
+        <div class="ob-tag-pill">✓ Natural light detection</div>
+        <div class="ob-tag-pill">✓ Live angle guidance</div>
+        <div class="ob-tag-pill">✓ Per-shot quality lock</div>
+      </div>
+    </div>
+    <div class="ob-visual">
+      <div class="phone-frame">
+        <div class="phone-top">Create Your Avatar</div>
+        <div class="viewfinder">
+          <div class="vf-corners"></div>
+          <div class="vf-oval">
+            <div class="vf-oval-text">Good light ✓<br>Face centred ✓</div>
+          </div>
+          <div class="vf-badge">☀ Natural light</div>
+        </div>
+        <div class="phone-progress">
+          <div class="prog-row"><span>Photo 3 of 6</span><span style="color:var(--accent);">50%</span></div>
+          <div class="prog-bar"><div class="prog-fill"></div></div>
+        </div>
+        <div class="photo-slots">
+          <div class="slot done">✓</div>
+          <div class="slot done">✓</div>
+          <div class="slot active">●</div>
+          <div class="slot empty"></div>
+          <div class="slot empty"></div>
+          <div class="slot empty"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Style DNA -->
+  <div class="ob-step">
+    <div class="ob-visual">
+      <div class="style-quiz">
+        <div class="sq-title">Pick your aesthetic.</div>
+        <div class="sq-sub">Choose all that feel like you. This shapes your feed immediately — before your avatar is even ready.</div>
+        <div class="sq-grid">
+          <div class="sq-card sel" onclick="toggleQuizCard(this)" style="background:var(--cream);">
+            <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;"><svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="12" rx="11" ry="12" fill="#181410"/><ellipse cx="40" cy="16" rx="8" ry="9" fill="#8b5e3c"/><path d="M24 24 L17 24 L13 90 L67 90 L63 24 L56 24 Q50 19 40 19 Q30 19 24 24Z" fill="#181410"/></svg></div>
+            <div class="sq-check">✓</div>
+            <div class="sq-card-label">Quiet Luxury</div>
+          </div>
+          <div class="sq-card" onclick="toggleQuizCard(this)" style="background:var(--warm);">
+            <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;"><svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="12" rx="10" ry="11" fill="#c49565"/><ellipse cx="40" cy="16" rx="8" ry="9" fill="#e8c09a"/><path d="M26 24 Q40 20 54 24 L58 85 Q40 92 22 85Z" fill="rgba(200,169,110,.55)"/></svg></div>
+            <div class="sq-check">✓</div>
+            <div class="sq-card-label">Dark Romance</div>
+          </div>
+          <div class="sq-card" onclick="toggleQuizCard(this)" style="background:var(--cream);">
+            <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;"><svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="11" rx="10" ry="11" fill="#3d2a1a"/><ellipse cx="40" cy="15" rx="8" ry="9" fill="#d4a070"/><path d="M22 22 L15 22 L11 88 L69 88 L65 22 L58 22 Q50 17 40 17 Q30 17 22 22Z" fill="#c0b498"/><rect x="14" y="54" width="52" height="4" fill="#9a8870" rx="1"/></svg></div>
+            <div class="sq-check">✓</div>
+            <div class="sq-card-label">Utility Chic</div>
+          </div>
+          <div class="sq-card" onclick="toggleQuizCard(this)" style="background:var(--warm);">
+            <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;"><svg width="80" height="100" viewBox="0 0 80 100"><ellipse cx="40" cy="11" rx="10" ry="11" fill="#5c3d1e"/><ellipse cx="40" cy="15" rx="8" ry="9" fill="#d4a070"/><path d="M26 22 Q40 18 54 22 L58 85 Q40 92 22 85Z" fill="#ede8dc"/><line x1="28" y1="24" x2="26" y2="82" stroke="rgba(17,16,8,.08)" stroke-width="1.5"/><line x1="40" y1="24" x2="40" y2="82" stroke="rgba(17,16,8,.08)" stroke-width="1.5"/><line x1="52" y1="24" x2="54" y2="82" stroke="rgba(17,16,8,.08)" stroke-width="1.5"/></svg></div>
+            <div class="sq-check">✓</div>
+            <div class="sq-card-label">Minimal Drape</div>
+          </div>
+        </div>
+        <button class="sq-btn" onclick="showToast('Preferences saved — building your feed...')">Lock in my aesthetic →</button>
+      </div>
+    </div>
+    <div class="ob-info">
+      <div class="ob-num">02</div>
+      <div class="ob-tag">Your Style DNA</div>
+      <div class="ob-title">Tell us who you are.<br>We'll start building<br><em>before you wait.</em></div>
+      <div class="ob-desc">The avatar takes 30 minutes. But taste is instant. While diffusion models work in the background, users pick their aesthetics, favourite brands, and style eras — and Doji starts curating their feed immediately. When the avatar is ready, it lands in a world already built for them.</div>
+      <div class="ob-tags">
+        <div class="ob-tag-pill">✓ Feed ready before avatar</div>
+        <div class="ob-tag-pill">✓ Reduces perceived wait</div>
+        <div class="ob-tag-pill">✓ Stronger first session</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: The Wait -->
+  <div class="ob-step">
+    <div class="ob-info">
+      <div class="ob-num">03</div>
+      <div class="ob-tag">The Wait</div>
+      <div class="ob-title">30 minutes.<br>But it doesn't<br>feel like <em>waiting.</em></div>
+      <div class="ob-desc">The biggest drop-off risk is the 30-minute avatar generation window. Instead of just a loading bar, show a tabbed "while you wait" experience — style tips from brands in their feed, a lookbook from their chosen aesthetics, and a running commentary from Doji about what your photos revealed about your style. Curiosity keeps them. Anticipation sells the avatar.</div>
+      <div class="ob-tags">
+        <div class="ob-tag-pill">✓ Brand lookbook preview</div>
+        <div class="ob-tag-pill">✓ Style intel teaser</div>
+        <div class="ob-tag-pill">✓ Notify when ready</div>
+      </div>
+    </div>
+    <div class="ob-visual">
+      <div class="wait-frame">
+        <div class="wf-top">
+          <div class="wf-title">Building your avatar...</div>
+          <div class="wf-sub">Est. 24 minutes remaining</div>
+        </div>
+        <div class="wf-prog">
+          <div class="wf-prog-bar"><div class="wf-prog-fill"></div></div>
+          <div class="wf-prog-row"><span>Refining likeness</span><span style="color:var(--accent);">67%</span></div>
+        </div>
+        <div class="wf-tabs">
+          <button class="wf-tab active" onclick="setWfTab(this)">Style Intel</button>
+          <button class="wf-tab" onclick="setWfTab(this)">Lookbook</button>
+          <button class="wf-tab" onclick="setWfTab(this)">For You</button>
+        </div>
+        <div class="wf-content">
+          <span class="wf-while-lbl">While you wait, from your photos...</span>
+          <div class="wf-tip">"You have a longer torso — structured jackets with a defined shoulder will always hit differently on you."</div>
+          <div class="wf-tip">"Your face shape suits high necklines and clean, graphic collars."</div>
+          <div class="wf-tip">"Your proportions are ideal for wide-leg trousers. The Row FW25 was made for you."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Reveal -->
+  <div class="ob-step">
+    <div class="ob-visual">
+      <div class="reveal-frame">
+        <div class="reveal-card">
+          <div class="reveal-head">Your Avatar is Ready</div>
+          <div class="reveal-fig">
+            <svg width="180" height="280" viewBox="0 0 180 280">
+              <!-- Full reveal figure: the hero coat in smaller scale -->
+              <ellipse cx="90" cy="270" rx="54" ry="8" fill="rgba(15,14,10,.07)"/>
+              <ellipse cx="90" cy="34" rx="18" ry="20" fill="#1a1208"/>
+              <circle cx="90" cy="18" r="11" fill="#1a1208"/>
+              <ellipse cx="90" cy="40" rx="14" ry="16" fill="#c49565"/>
+              <ellipse cx="76" cy="46" rx="3" ry="4" fill="#b8855a"/>
+              <ellipse cx="104" cy="46" rx="3" ry="4" fill="#b8855a"/>
+              <path d="M82" y="56" width="8" height="8" fill="#c49565"/>
+              <path d="M46 62 L38 220 L142 220 L134 62 Q116 54 90 54 Q64 54 46 62Z" fill="#c8a96e"/>
+              <path d="M46 62 L36 64 L38 84 L46 82Z" fill="#b89055"/>
+              <path d="M134 62 L144 64 L142 84 L134 82Z" fill="#b89055"/>
+              <path d="M90 58 L78 82 L72 58 L80 56Z" fill="#d4b478"/>
+              <path d="M90 58 L102 82 L108 58 L100 56Z" fill="#d4b478"/>
+              <path d="M46 64 L32 158 L44 162 L56 74Z" fill="#c0984a"/>
+              <path d="M134 64 L148 158 L136 162 L124 74Z" fill="#c0984a"/>
+              <ellipse cx="38" cy="164" rx="10" ry="8" fill="#c49565"/>
+              <ellipse cx="142" cy="164" rx="10" ry="8" fill="#c49565"/>
+              <circle cx="90" cy="118" r="3" fill="rgba(160,120,40,.6)"/>
+              <circle cx="90" cy="145" r="3" fill="rgba(160,120,40,.6)"/>
+              <path d="M62 218 L46 262 L76 262 L90 240 L104 262 L134 262 L118 218Z" fill="#1a1410"/>
+              <line x1="60" y1="220" x2="53" y2="256" stroke="rgba(255,255,255,.05)" stroke-width="1.5"/>
+              <line x1="120" y1="220" x2="127" y2="256" stroke="rgba(255,255,255,.05)" stroke-width="1.5"/>
+              <path d="M46 260 Q38 270 60 274 L76 268 L76 260Z" fill="#111008"/>
+              <path d="M134 260 Q142 270 120 274 L104 268 L104 260Z" fill="#111008"/>
+            </svg>
+          </div>
+          <div class="reveal-hint">✦ Your first look is already waiting</div>
+        </div>
+        <button class="reveal-cta" onclick="showPage('feed',document.querySelectorAll('.nav-tab')[1]);showToast('Welcome to Doji. Your style story starts now.')">Enter Doji →</button>
+      </div>
+    </div>
+    <div class="ob-info">
+      <div class="ob-num">04</div>
+      <div class="ob-tag">The Reveal</div>
+      <div class="ob-title">Not a notification.<br>A <em>moment.</em></div>
+      <div class="ob-desc">The avatar reveal should feel like something. Not just a push notification — a return screen with your likeness front and centre, your first curated look already on it, and a subtle message: "Your style story starts now." The 30 minutes of anticipation pays off here. It's a product moment worth designing.</div>
+      <div class="ob-tags">
+        <div class="ob-tag-pill">✓ Full-screen reveal</div>
+        <div class="ob-tag-pill">✓ First look pre-styled</div>
+        <div class="ob-tag-pill">✓ Emotional onboarding end</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+function showPage(id, tabEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function setFeedTab(el) {
+  document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function setWfTab(el) {
+  document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleLike(btn) {
+  const lc = btn.querySelector('.lc');
+  if (!lc) return;
+  const liked = btn.classList.toggle('liked');
+  lc.textContent = parseInt(lc.textContent) + (liked ? 1 : -1);
+  const heart = btn.childNodes[0];
+  heart.textContent = liked ? '♥ ' : '♡ ';
+}
+function toggleComments(btn) {
+  const post = btn.closest('.post');
+  const ids = ['c1','c2'];
+  for (const id of ids) {
+    const el = post.querySelector('#' + id) || post.querySelector('.comments-area');
+    if (el) { el.style.display = el.style.display === 'none' ? 'block' : 'none'; return; }
+  }
+  const ca = post.querySelector('.comments-area');
+  if (ca) ca.style.display = ca.style.display === 'none' ? 'block' : 'none';
+}
+function toggleQuizCard(el) {
+  el.classList.toggle('sel');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+// Fix comment toggle to work by post
+document.querySelectorAll('.action-btn').forEach(btn => {
+  if(btn.textContent.includes('○')) {
+    btn.addEventListener('click', function() {
+      const post = this.closest('.post');
+      const ca = post ? post.querySelector('.comments-area') : null;
+      if(ca) ca.style.display = ca.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+});
+</script>
+</body>
+</html>
